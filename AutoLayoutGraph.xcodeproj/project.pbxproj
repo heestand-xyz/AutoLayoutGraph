@@ -10,6 +10,16 @@
 		D3C3A4992AF0C51A0008C8FB /* AutoLayoutGraph.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3C3A4982AF0C51A0008C8FB /* AutoLayoutGraph.hpp */; };
 		D3C3A49B2AF0C51A0008C8FB /* AutoLayoutGraphPriv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3C3A49A2AF0C51A0008C8FB /* AutoLayoutGraphPriv.hpp */; };
 		D3C3A49D2AF0C51A0008C8FB /* AutoLayoutGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3C3A49C2AF0C51A0008C8FB /* AutoLayoutGraph.cpp */; };
+		D3C3A4AA2AF0C5570008C8FB /* ALGNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3C3A4A82AF0C5570008C8FB /* ALGNode.cpp */; };
+		D3C3A4AB2AF0C5570008C8FB /* ALGNode.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3C3A4A92AF0C5570008C8FB /* ALGNode.hpp */; };
+		D3C3A4AF2AF0C7760008C8FB /* ALGPoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3C3A4AD2AF0C7760008C8FB /* ALGPoint.cpp */; };
+		D3C3A4B02AF0C7760008C8FB /* ALGPoint.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3C3A4AE2AF0C7760008C8FB /* ALGPoint.hpp */; };
+		D3C3A4B32AF0D1ED0008C8FB /* ALGGroupNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3C3A4B12AF0D1ED0008C8FB /* ALGGroupNode.cpp */; };
+		D3C3A4B42AF0D1ED0008C8FB /* ALGGroupNode.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3C3A4B22AF0D1ED0008C8FB /* ALGGroupNode.hpp */; };
+		D3C3A4B72AF0D3280008C8FB /* ALGNodeSection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3C3A4B52AF0D3280008C8FB /* ALGNodeSection.cpp */; };
+		D3C3A4B82AF0D3280008C8FB /* ALGNodeSection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3C3A4B62AF0D3280008C8FB /* ALGNodeSection.hpp */; };
+		D3C3A4BB2AF0D47D0008C8FB /* ALGItemNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3C3A4B92AF0D47D0008C8FB /* ALGItemNode.cpp */; };
+		D3C3A4BC2AF0D47D0008C8FB /* ALGItemNode.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3C3A4BA2AF0D47D0008C8FB /* ALGItemNode.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -17,6 +27,16 @@
 		D3C3A4982AF0C51A0008C8FB /* AutoLayoutGraph.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AutoLayoutGraph.hpp; sourceTree = "<group>"; };
 		D3C3A49A2AF0C51A0008C8FB /* AutoLayoutGraphPriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AutoLayoutGraphPriv.hpp; sourceTree = "<group>"; };
 		D3C3A49C2AF0C51A0008C8FB /* AutoLayoutGraph.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AutoLayoutGraph.cpp; sourceTree = "<group>"; };
+		D3C3A4A82AF0C5570008C8FB /* ALGNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ALGNode.cpp; sourceTree = "<group>"; };
+		D3C3A4A92AF0C5570008C8FB /* ALGNode.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ALGNode.hpp; sourceTree = "<group>"; };
+		D3C3A4AD2AF0C7760008C8FB /* ALGPoint.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGPoint.cpp; sourceTree = "<group>"; };
+		D3C3A4AE2AF0C7760008C8FB /* ALGPoint.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGPoint.hpp; sourceTree = "<group>"; };
+		D3C3A4B12AF0D1ED0008C8FB /* ALGGroupNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGGroupNode.cpp; sourceTree = "<group>"; };
+		D3C3A4B22AF0D1ED0008C8FB /* ALGGroupNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGGroupNode.hpp; sourceTree = "<group>"; };
+		D3C3A4B52AF0D3280008C8FB /* ALGNodeSection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGNodeSection.cpp; sourceTree = "<group>"; };
+		D3C3A4B62AF0D3280008C8FB /* ALGNodeSection.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGNodeSection.hpp; sourceTree = "<group>"; };
+		D3C3A4B92AF0D47D0008C8FB /* ALGItemNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGItemNode.cpp; sourceTree = "<group>"; };
+		D3C3A4BA2AF0D47D0008C8FB /* ALGItemNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGItemNode.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +72,34 @@
 				D3C3A4982AF0C51A0008C8FB /* AutoLayoutGraph.hpp */,
 				D3C3A49A2AF0C51A0008C8FB /* AutoLayoutGraphPriv.hpp */,
 				D3C3A49C2AF0C51A0008C8FB /* AutoLayoutGraph.cpp */,
+				D3C3A4A72AF0C5570008C8FB /* Nodes */,
+				D3C3A4AC2AF0C75F0008C8FB /* Layout */,
 			);
 			path = AutoLayoutGraph;
+			sourceTree = "<group>";
+		};
+		D3C3A4A72AF0C5570008C8FB /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				D3C3A4A82AF0C5570008C8FB /* ALGNode.cpp */,
+				D3C3A4A92AF0C5570008C8FB /* ALGNode.hpp */,
+				D3C3A4B92AF0D47D0008C8FB /* ALGItemNode.cpp */,
+				D3C3A4BA2AF0D47D0008C8FB /* ALGItemNode.hpp */,
+				D3C3A4B12AF0D1ED0008C8FB /* ALGGroupNode.cpp */,
+				D3C3A4B22AF0D1ED0008C8FB /* ALGGroupNode.hpp */,
+				D3C3A4B52AF0D3280008C8FB /* ALGNodeSection.cpp */,
+				D3C3A4B62AF0D3280008C8FB /* ALGNodeSection.hpp */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		D3C3A4AC2AF0C75F0008C8FB /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				D3C3A4AD2AF0C7760008C8FB /* ALGPoint.cpp */,
+				D3C3A4AE2AF0C7760008C8FB /* ALGPoint.hpp */,
+			);
+			path = Layout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -63,8 +109,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3C3A4B02AF0C7760008C8FB /* ALGPoint.hpp in Headers */,
+				D3C3A4B82AF0D3280008C8FB /* ALGNodeSection.hpp in Headers */,
 				D3C3A4992AF0C51A0008C8FB /* AutoLayoutGraph.hpp in Headers */,
 				D3C3A49B2AF0C51A0008C8FB /* AutoLayoutGraphPriv.hpp in Headers */,
+				D3C3A4AB2AF0C5570008C8FB /* ALGNode.hpp in Headers */,
+				D3C3A4B42AF0D1ED0008C8FB /* ALGGroupNode.hpp in Headers */,
+				D3C3A4BC2AF0D47D0008C8FB /* ALGItemNode.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +176,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3C3A4B32AF0D1ED0008C8FB /* ALGGroupNode.cpp in Sources */,
+				D3C3A4AA2AF0C5570008C8FB /* ALGNode.cpp in Sources */,
+				D3C3A4AF2AF0C7760008C8FB /* ALGPoint.cpp in Sources */,
+				D3C3A4BB2AF0D47D0008C8FB /* ALGItemNode.cpp in Sources */,
+				D3C3A4B72AF0D3280008C8FB /* ALGNodeSection.cpp in Sources */,
 				D3C3A49D2AF0C51A0008C8FB /* AutoLayoutGraph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
