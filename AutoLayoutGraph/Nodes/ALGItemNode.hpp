@@ -9,13 +9,19 @@
 #define ALGItemNode_hpp
 
 #include "ALGNode.hpp"
+#include "ALGSize.hpp"
 
 using namespace std;
 
 class ALGItemNode : public ALGNode {
     
 public:
-    ALGPoint size;
+    ALGSize size = ALGSize::zero;
+    
+    ALGItemNode(string typeName);
+    
+private:
+    ALGSize getSize();
 };
 
 #endif /* ALGItemNode_hpp */

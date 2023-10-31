@@ -11,6 +11,7 @@
 #include <uuid/uuid.h>
 #include <string>
 #include "ALGPoint.hpp"
+#include "ALGSize.hpp"
 
 using namespace std;
 
@@ -22,6 +23,9 @@ public:
     ALGPoint origin;
     
     ALGNode(string typeName);
+    virtual ~ALGNode() {}
+    
+    virtual ALGSize getSize() = 0;
 };
 
 #endif /* ALGNode_hpp */

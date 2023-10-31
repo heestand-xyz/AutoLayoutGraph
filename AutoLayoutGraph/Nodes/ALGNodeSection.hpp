@@ -10,12 +10,16 @@
 
 #include <vector>
 #include "ALGNode.hpp"
+#include "ALGLayout.hpp"
 
 using namespace std;
 
 struct ALGNodeSection {
     
     vector<ALGNode> nodes;
+    
+    ALGSize getSize();
+    void autoLayout(ALGLayout layout);
 };
 
 #endif /* ALGNodeSection_hpp */

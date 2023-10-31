@@ -9,6 +9,7 @@
 #define ALGPoint_hpp
 
 struct ALGPoint {
+    
     int x;
     int y;
     

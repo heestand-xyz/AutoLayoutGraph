@@ -6,3 +6,21 @@
 //
 
 #include "ALGGroupNode.hpp"
+#include "ALGSize.hpp"
+
+ALGGroupNode::ALGGroupNode(string typeName)
+: ALGNode(typeName)
+{
+}
+
+ALGSize ALGGroupNode::getSize()
+{
+    return ALGSize::zero;
+}
+
+void ALGGroupNode::autoLayout(ALGLayout layout)
+{
+    for(ALGNodeSection& section : sections) {
+        section.autoLayout(layout);
+    }
+}

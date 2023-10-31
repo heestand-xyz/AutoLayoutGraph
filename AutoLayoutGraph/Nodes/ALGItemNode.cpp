@@ -6,3 +6,15 @@
 //
 
 #include "ALGItemNode.hpp"
+#include "ALGSize.hpp"
+
+ALGItemNode::ALGItemNode(string typeName)
+: ALGNode(typeName)
+{
+}
+
+
+ALGSize ALGItemNode::getSize()
+{
+    return size;
+}

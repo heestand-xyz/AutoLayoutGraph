@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3635E872AF1243B0054EDB1 /* ALGSize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3635E852AF1243B0054EDB1 /* ALGSize.cpp */; };
+		D3635E882AF1243B0054EDB1 /* ALGSize.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3635E862AF1243B0054EDB1 /* ALGSize.hpp */; };
+		D3635E8B2AF127C20054EDB1 /* ALGLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3635E892AF127C20054EDB1 /* ALGLayout.cpp */; };
+		D3635E8C2AF127C20054EDB1 /* ALGLayout.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3635E8A2AF127C20054EDB1 /* ALGLayout.hpp */; };
+		D3635E8F2AF12D930054EDB1 /* ALGRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3635E8D2AF12D930054EDB1 /* ALGRect.cpp */; };
+		D3635E902AF12D930054EDB1 /* ALGRect.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3635E8E2AF12D930054EDB1 /* ALGRect.hpp */; };
 		D3C3A4992AF0C51A0008C8FB /* AutoLayoutGraph.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3C3A4982AF0C51A0008C8FB /* AutoLayoutGraph.hpp */; };
 		D3C3A49B2AF0C51A0008C8FB /* AutoLayoutGraphPriv.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3C3A49A2AF0C51A0008C8FB /* AutoLayoutGraphPriv.hpp */; };
 		D3C3A49D2AF0C51A0008C8FB /* AutoLayoutGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3C3A49C2AF0C51A0008C8FB /* AutoLayoutGraph.cpp */; };
@@ -23,6 +29,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D3635E852AF1243B0054EDB1 /* ALGSize.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGSize.cpp; sourceTree = "<group>"; };
+		D3635E862AF1243B0054EDB1 /* ALGSize.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGSize.hpp; sourceTree = "<group>"; };
+		D3635E892AF127C20054EDB1 /* ALGLayout.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGLayout.cpp; sourceTree = "<group>"; };
+		D3635E8A2AF127C20054EDB1 /* ALGLayout.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGLayout.hpp; sourceTree = "<group>"; };
+		D3635E8D2AF12D930054EDB1 /* ALGRect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGRect.cpp; sourceTree = "<group>"; };
+		D3635E8E2AF12D930054EDB1 /* ALGRect.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGRect.hpp; sourceTree = "<group>"; };
 		D3C3A4952AF0C51A0008C8FB /* libAutoLayoutGraph.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libAutoLayoutGraph.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C3A4982AF0C51A0008C8FB /* AutoLayoutGraph.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AutoLayoutGraph.hpp; sourceTree = "<group>"; };
 		D3C3A49A2AF0C51A0008C8FB /* AutoLayoutGraphPriv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AutoLayoutGraphPriv.hpp; sourceTree = "<group>"; };
@@ -98,6 +110,12 @@
 			children = (
 				D3C3A4AD2AF0C7760008C8FB /* ALGPoint.cpp */,
 				D3C3A4AE2AF0C7760008C8FB /* ALGPoint.hpp */,
+				D3635E852AF1243B0054EDB1 /* ALGSize.cpp */,
+				D3635E862AF1243B0054EDB1 /* ALGSize.hpp */,
+				D3635E892AF127C20054EDB1 /* ALGLayout.cpp */,
+				D3635E8A2AF127C20054EDB1 /* ALGLayout.hpp */,
+				D3635E8D2AF12D930054EDB1 /* ALGRect.cpp */,
+				D3635E8E2AF12D930054EDB1 /* ALGRect.hpp */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -109,9 +127,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3635E8C2AF127C20054EDB1 /* ALGLayout.hpp in Headers */,
+				D3635E882AF1243B0054EDB1 /* ALGSize.hpp in Headers */,
 				D3C3A4B02AF0C7760008C8FB /* ALGPoint.hpp in Headers */,
 				D3C3A4B82AF0D3280008C8FB /* ALGNodeSection.hpp in Headers */,
 				D3C3A4992AF0C51A0008C8FB /* AutoLayoutGraph.hpp in Headers */,
+				D3635E902AF12D930054EDB1 /* ALGRect.hpp in Headers */,
 				D3C3A49B2AF0C51A0008C8FB /* AutoLayoutGraphPriv.hpp in Headers */,
 				D3C3A4AB2AF0C5570008C8FB /* ALGNode.hpp in Headers */,
 				D3C3A4B42AF0D1ED0008C8FB /* ALGGroupNode.hpp in Headers */,
@@ -176,12 +197,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3635E8B2AF127C20054EDB1 /* ALGLayout.cpp in Sources */,
 				D3C3A4B32AF0D1ED0008C8FB /* ALGGroupNode.cpp in Sources */,
 				D3C3A4AA2AF0C5570008C8FB /* ALGNode.cpp in Sources */,
 				D3C3A4AF2AF0C7760008C8FB /* ALGPoint.cpp in Sources */,
+				D3635E8F2AF12D930054EDB1 /* ALGRect.cpp in Sources */,
 				D3C3A4BB2AF0D47D0008C8FB /* ALGItemNode.cpp in Sources */,
 				D3C3A4B72AF0D3280008C8FB /* ALGNodeSection.cpp in Sources */,
 				D3C3A49D2AF0C51A0008C8FB /* AutoLayoutGraph.cpp in Sources */,
+				D3635E872AF1243B0054EDB1 /* ALGSize.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
