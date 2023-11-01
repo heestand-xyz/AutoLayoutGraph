@@ -15,11 +15,5 @@
 #include "Nodes/ALGItemNode.hpp"
 #include "Nodes/ALGGroupNode.hpp"
 
-class AutoLayoutGraph
-{
-    public:
-    void HelloWorld(const char *);
-};
-
 #pragma GCC visibility pop
 #endif
