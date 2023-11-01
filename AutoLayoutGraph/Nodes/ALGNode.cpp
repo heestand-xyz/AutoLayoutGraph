@@ -34,8 +34,9 @@ void ALGNode::connect(ALGNode* leadingNode, ALGNode* trailingNode)
     if (ALGNode::isLoop(leadingNode, trailingNode)) {
         throw ConnectException("Connection failed, loop found.");
     }
-    leadingNode->outputNodes.push_back(trailingNode);
-    trailingNode->inputNodes.push_back(leadingNode);
+    ALGWire* wire = new ALGWire(leadingNode, trailingNode);
+    leadingNode->outputWires.push_back(wire);
+    trailingNode->inputWires.push_back(wire);
     cout << "did connect leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
 }
 
@@ -45,23 +46,34 @@ void ALGNode::disconnect(ALGNode* leadingNode, ALGNode* trailingNode)
     if (!ALGNode::isConnected(leadingNode, trailingNode)) {
         throw ConnectException("Disconnect failed, already disconnected.");
     }
-    removeIn(leadingNode->outputNodes, trailingNode);
-    removeIn(trailingNode->inputNodes, leadingNode);
+    ALGWire* wire = optionalWire(leadingNode, trailingNode);
+    if (wire == nullptr) {
+        throw ConnectException("Disconnect failed, wire not found.");
+    }
+    ALGNode::disconnect(wire);
     cout << "did disconnect leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
 }
 
+void ALGNode::disconnect(ALGWire* wire)
+{
+    cout << "will disconnect wire" << endl;
+    removeIn(wire->leadingNode->outputWires, wire);
+    removeIn(wire->trailingNode->inputWires, wire);
+    delete wire;
+    cout << "did disconnect wire" << endl;
+}
+
+ALGWire* ALGNode::optionalWire(ALGNode* leadingNode, ALGNode* trailingNode) {
+    for (ALGWire* wire : leadingNode->outputWires) {
+        if (wire->trailingNode == trailingNode) {
+            return wire;
+        }
+    }
+    return nullptr;
+}
+
 bool ALGNode::isConnected(ALGNode* leadingNode, ALGNode* trailingNode) {
-    if (containsWhere(leadingNode->outputNodes, [trailingNode](ALGNode* node) {
-        return isEqual(node->id, trailingNode->id);
-    })) {
-        return true;
-    }
-    if (containsWhere(trailingNode->inputNodes, [leadingNode](ALGNode* node) {
-        return isEqual(node->id, leadingNode->id);
-    })) {
-        return true;
-    }
-    return false;
+    return ALGNode::optionalWire(leadingNode, trailingNode) != nullptr;
 }
 
 bool ALGNode::isLoop(ALGNode* leadingNode, ALGNode* trailingNode) {
@@ -76,10 +88,10 @@ bool ALGNode::isLoop(ALGNode* leadingNode, ALGNode* trailingNode) {
 
 bool ALGNode::containsDownstream(uuid_t id)
 {
-    for (ALGNode* node : outputNodes) {
-        if (node->id == id) {
+    for (ALGWire* wire : outputWires) {
+        if (wire->trailingNode->id == id) {
             return true;
-        } else if (node->containsDownstream(id)) {
+        } else if (wire->trailingNode->containsDownstream(id)) {
             return true;
         }
     }
@@ -87,10 +99,10 @@ bool ALGNode::containsDownstream(uuid_t id)
 }
 bool ALGNode::containsUpstream(uuid_t id)
 {
-    for (ALGNode* node : inputNodes) {
-        if (node->id == id) {
+    for (ALGWire* wire : inputWires) {
+        if (wire->leadingNode->id == id) {
             return true;
-        } else if (node->containsUpstream(id)) {
+        } else if (wire->leadingNode->containsUpstream(id)) {
             return true;
         }
     }

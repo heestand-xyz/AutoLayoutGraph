@@ -8,6 +8,8 @@
 #ifndef ALGWire_hpp
 #define ALGWire_hpp
 
+class ALGNode;
+
 #include "../Nodes/ALGNode.hpp"
 #include "ALGWireLength.hpp"
 
@@ -17,8 +19,11 @@ class ALGWire {
     
 public:
     ALGWireLength length;
-    ALGNode* upstreamNode;
-    ALGNode* downstreamNode;
+    
+    ALGNode* leadingNode;
+    ALGNode* trailingNode;
+    
+    ALGWire(ALGNode* leadingNode, ALGNode* trailingNode);
 };
 
 #endif /* ALGWire_hpp */

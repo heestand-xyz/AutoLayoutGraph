@@ -8,8 +8,11 @@
 #ifndef ALGNode_hpp
 #define ALGNode_hpp
 
+class ALGWire;
+
 #include <uuid/uuid.h>
 #include <string>
+#include "../Wires/ALGWire.hpp"
 #include "../Layout/ALGPoint.hpp"
 #include "../Layout/ALGSize.hpp"
 #include "../Layout/ALGLayout.hpp"
@@ -23,8 +26,8 @@ public:
     string typeName;
     ALGPoint origin;
     
-    vector<ALGNode*> inputNodes;
-    vector<ALGNode*> outputNodes;
+    vector<ALGWire*> inputWires;
+    vector<ALGWire*> outputWires;
     
     ALGNode(string typeName);
     virtual ~ALGNode() {}
@@ -33,7 +36,9 @@ public:
     
     static void connect(ALGNode* leadingNode, ALGNode* trailingNode);
     static void disconnect(ALGNode* leadingNode, ALGNode* trailingNode);
+    static void disconnect(ALGWire*);
     
+    static ALGWire* optionalWire(ALGNode* leadingNode, ALGNode* trailingNode);
     static bool isConnected(ALGNode* leadingNode, ALGNode* trailingNode);
     static bool isLoop(ALGNode* leadingNode, ALGNode* trailingNode);
     

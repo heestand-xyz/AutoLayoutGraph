@@ -6,3 +6,9 @@
 //
 
 #include "ALGWire.hpp"
+
+ALGWire::ALGWire(ALGNode* leadingNode, ALGNode* trailingNode) :
+length(ALGWireLength::AUTO),
+leadingNode(leadingNode),
+trailingNode(trailingNode)
+{ }

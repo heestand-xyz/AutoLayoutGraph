@@ -27,7 +27,6 @@ public:
     
     void autoLayout(ALGLayout layout);
     
-private:
     ALGSize getSize(ALGLayout layout);
 };
 

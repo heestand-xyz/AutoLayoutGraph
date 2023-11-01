@@ -20,7 +20,6 @@ public:
     
     ALGItemNode(string typeName);
     
-private:
     ALGSize getSize(ALGLayout layout);
 };
 

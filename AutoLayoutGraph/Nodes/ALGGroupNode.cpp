@@ -23,7 +23,7 @@ public:
 
 void ALGGroupNode::add(ALGNode* node) {
     cout << "will add node: " << node->typeName << endl;
-    if (!node->inputNodes.empty() || !node->outputNodes.empty()) {
+    if (!node->inputWires.empty() || !node->outputWires.empty()) {
         throw GroupException("Add node failed, node is connected.");
     }
     ALGNodeSection section = ALGNodeSection();
@@ -34,15 +34,11 @@ void ALGGroupNode::add(ALGNode* node) {
 
 void ALGGroupNode::remove(ALGNode* node) {
     cout << "will remove node: " << node->typeName << endl;
-    if (!node->inputNodes.empty()) {
-        for (ALGNode* inputNode : node->inputNodes) {
-            ALGNode::disconnect(inputNode, node);
-        }
+    for (ALGWire* wire : node->inputWires) {
+        ALGNode::disconnect(wire);
     }
-    if (!node->outputNodes.empty()) {
-        for (ALGNode* outputNode : node->outputNodes) {
-            ALGNode::disconnect(node, outputNode);
-        }
+    for (ALGWire* wire : node->outputWires) {
+        ALGNode::disconnect(wire);
     }
     bool didRemove = false;
     for (ALGNodeSection section : sections) {
