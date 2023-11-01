@@ -10,9 +10,10 @@
 
 #include <vector>
 #include "ALGNode.hpp"
-#include "ALGNodeSection.hpp"
 #include "../Layout/ALGLayout.hpp"
 #include "../Layout/ALGSize.hpp"
+
+class ALGNodeSection;
 
 using namespace std;
 

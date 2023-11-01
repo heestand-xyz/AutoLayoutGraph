@@ -5,8 +5,8 @@
 //  Created by Anton Heestand on 2023-10-31.
 //
 
-#include "ALGGroupNode.hpp"
 #include "ALGNodeSection.hpp"
+#include "ALGGroupNode.hpp"
 #include "ALGRect.hpp"
 
 bool ALGNodeSection::contains(ALGNode* node) {

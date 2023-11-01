@@ -7,9 +7,6 @@
 
 #ifndef ALGWire_hpp
 #define ALGWire_hpp
-
-class ALGNode;
-
 #include "../Nodes/ALGNode.hpp"
 #include "ALGWireLength.hpp"
 

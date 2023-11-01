@@ -9,15 +9,16 @@
 #include <stdexcept>
 #include "ALGNode.hpp"
 #include "ALGPoint.hpp"
+#include "ALGGroupNode.hpp"
+#include "../Wires/ALGWire.hpp"
 #include "../Helpers/Remove.hpp"
 #include "../Helpers/Contains.hpp"
 #include "../Helpers/Equal.hpp"
 
 ALGNode::ALGNode(string typeName)
-: origin(ALGPoint::zero)
+: origin(ALGPoint::zero), typeName(typeName)
 {
     uuid_generate(id);
-    this->typeName = typeName;
 }
 
 ALGPoint ALGNode::getOrigin(ALGLayout layout) {
@@ -43,6 +44,7 @@ public:
     ConnectException(const std::string& message) : std::runtime_error(message) {}
 };
 
+#warning TODO: Categorize in sections on connect
 void ALGNode::connect(ALGNode* leadingNode, ALGNode* trailingNode)
 {
     cout << "will connect leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;

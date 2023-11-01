@@ -8,11 +8,8 @@
 #ifndef ALGNode_hpp
 #define ALGNode_hpp
 
-class ALGWire;
-
 #include <uuid/uuid.h>
 #include <string>
-#include "../Wires/ALGWire.hpp"
 #include "../Layout/ALGPoint.hpp"
 #include "../Layout/ALGSize.hpp"
 #include "../Layout/ALGRect.hpp"
@@ -20,12 +17,17 @@ class ALGWire;
 
 using namespace std;
 
+class ALGGroupNode;
+class ALGWire;
+
 class ALGNode {
     
 public:
     uuid_t id;
     string typeName;
     ALGPoint origin;
+    
+//    ALGGroupNode* parent = nullptr;
     
     vector<ALGWire*> inputWires;
     vector<ALGWire*> outputWires;

@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "ALGGroupNode.hpp"
+#include "ALGNodeSection.hpp"
 #include "../Helpers/Remove.hpp"
 #include "../Helpers/Contains.hpp"
 #include "../Helpers/Equal.hpp"
