@@ -21,6 +21,18 @@ ALGNode::ALGNode(string typeName)
     uuid_generate(id);
 }
 
+class NodeException : public std::runtime_error {
+public:
+    NodeException(const std::string& message) : std::runtime_error(message) {}
+};
+
+void ALGNode::removeFromParent() {
+    if (parent == nullptr) {
+        throw NodeException("Remove from parent failed, no parent found.");
+    }
+    parent->remove(this);
+}
+
 ALGPoint ALGNode::getOrigin(ALGLayout layout) {
     // TODO: Implement
     return ALGPoint::zero;
@@ -39,20 +51,15 @@ bool ALGNode::hitTest(ALGPoint point, ALGLayout layout) {
     return hitX && hitY;
 }
 
-class ConnectException : public std::runtime_error {
-public:
-    ConnectException(const std::string& message) : std::runtime_error(message) {}
-};
-
 #warning TODO: Categorize in sections on connect
 void ALGNode::connect(ALGNode* leadingNode, ALGNode* trailingNode)
 {
     cout << "will connect leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
     if (ALGNode::isConnected(leadingNode, trailingNode)) {
-        throw ConnectException("Connection failed, already connected.");
+        throw NodeException("Connection failed, already connected.");
     }
     if (ALGNode::isLoop(leadingNode, trailingNode)) {
-        throw ConnectException("Connection failed, loop found.");
+        throw NodeException("Connection failed, loop found.");
     }
     ALGWire* wire = new ALGWire(leadingNode, trailingNode);
     leadingNode->outputWires.push_back(wire);
@@ -64,11 +71,11 @@ void ALGNode::disconnect(ALGNode* leadingNode, ALGNode* trailingNode)
 {
     cout << "will disconnect leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
     if (!ALGNode::isConnected(leadingNode, trailingNode)) {
-        throw ConnectException("Disconnect failed, already disconnected.");
+        throw NodeException("Disconnect failed, already disconnected.");
     }
     ALGWire* wire = optionalWire(leadingNode, trailingNode);
     if (wire == nullptr) {
-        throw ConnectException("Disconnect failed, wire not found.");
+        throw NodeException("Disconnect failed, wire not found.");
     }
     ALGNode::disconnect(wire);
     cout << "did disconnect leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;

@@ -27,13 +27,15 @@ public:
     string typeName;
     ALGPoint origin;
     
-//    ALGGroupNode* parent = nullptr;
+    ALGGroupNode* parent = nullptr;
     
     vector<ALGWire*> inputWires;
     vector<ALGWire*> outputWires;
     
     ALGNode(string typeName);
     virtual ~ALGNode() {}
+    
+    void removeFromParent();
     
     virtual ALGSize getSize(ALGLayout layout) = 0;
     ALGPoint getOrigin(ALGLayout layout);

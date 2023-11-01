@@ -23,17 +23,24 @@ public:
 
 void ALGGroupNode::add(ALGNode* node) {
     cout << "will add node: " << node->typeName << endl;
+    if (node->parent) {
+        throw GroupException("Add node failed, node already has a parent.");
+    }
     if (!node->inputWires.empty() || !node->outputWires.empty()) {
         throw GroupException("Add node failed, node is connected.");
     }
     ALGNodeSection section = ALGNodeSection();
     section.nodes.push_back(node);
     sections.push_back(section);
+    node->parent = this;
     cout << "did add node: " << node->typeName << endl;
 }
 
 void ALGGroupNode::remove(ALGNode* node) {
     cout << "will remove node: " << node->typeName << endl;
+    if (node->parent == nullptr) {
+        throw GroupException("Remove node failed, node parent not found.");
+    }
     for (ALGWire* wire : node->inputWires) {
         ALGNode::disconnect(wire);
     }
@@ -51,8 +58,9 @@ void ALGGroupNode::remove(ALGNode* node) {
         }
     }
     if (!didRemove) {
-        throw GroupException("Remove node failed, not found.");
+        throw GroupException("Remove node failed, not found in group.");
     }
+    node->parent = nullptr;
     cout << "did remove node: " << node->typeName << endl;
 }
 
