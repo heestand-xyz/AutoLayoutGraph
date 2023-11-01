@@ -11,7 +11,7 @@
 using namespace std;
 
 template<typename T, typename Predicate>
-bool contains(const vector<T>& vec, Predicate pred) {
+bool containsWhere(const vector<T>& vec, Predicate pred) {
     for (const auto& elem : vec) {
         if (pred(elem)) {
             return true;

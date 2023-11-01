@@ -11,7 +11,7 @@
 using namespace std;
 
 template <typename T>
-void remove(vector<T>& vec, const T& element) {
+void removeIn(vector<T>& vec, const T& element) {
     vec.erase(
         remove(vec.begin(), vec.end(), element),
         vec.end()

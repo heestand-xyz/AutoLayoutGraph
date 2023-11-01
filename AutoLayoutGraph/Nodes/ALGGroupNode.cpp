@@ -8,18 +8,56 @@
 #include <iostream>
 #include "ALGGroupNode.hpp"
 #include "ALGSize.hpp"
+#include "../Helpers/Remove.hpp"
+#include "../Helpers/Contains.hpp"
+#include "../Helpers/Equal.hpp"
 
 ALGGroupNode::ALGGroupNode(string typeName)
 : ALGNode(typeName)
-{
-}
+{ }
+
+class GroupException : public std::runtime_error {
+public:
+    GroupException(const std::string& message) : std::runtime_error(message) {}
+};
 
 void ALGGroupNode::add(ALGNode* node) {
     cout << "will add node: " << node->typeName << endl;
+    if (!node->inputNodes.empty() || !node->outputNodes.empty()) {
+        throw GroupException("Add node failed, node is connected.");
+    }
     ALGNodeSection section = ALGNodeSection();
     section.nodes.push_back(node);
     sections.push_back(section);
     cout << "did add node: " << node->typeName << endl;
+}
+
+void ALGGroupNode::remove(ALGNode* node) {
+    cout << "will remove node: " << node->typeName << endl;
+    if (!node->inputNodes.empty()) {
+        for (ALGNode* inputNode : node->inputNodes) {
+            ALGNode::disconnect(inputNode, node);
+        }
+    }
+    if (!node->outputNodes.empty()) {
+        for (ALGNode* outputNode : node->outputNodes) {
+            ALGNode::disconnect(node, outputNode);
+        }
+    }
+    bool didRemove = false;
+    for (ALGNodeSection section : sections) {
+        if (containsWhere(section.nodes, [node](ALGNode* sectionNode) {
+            return isEqual(sectionNode->id, node->id);
+        })) {
+            removeIn(section.nodes, node);
+            didRemove = true;
+            break;
+        }
+    }
+    if (!didRemove) {
+        throw GroupException("Remove node failed, not found.");
+    }
+    cout << "did remove node: " << node->typeName << endl;
 }
 
 ALGSize ALGGroupNode::getSize(ALGLayout layout)

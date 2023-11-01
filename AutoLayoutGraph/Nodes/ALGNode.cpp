@@ -11,7 +11,7 @@
 #include "ALGPoint.hpp"
 #include "../Helpers/Remove.hpp"
 #include "../Helpers/Contains.hpp"
-#include "../Helpers/IsEqual.hpp"
+#include "../Helpers/Equal.hpp"
 
 ALGNode::ALGNode(string typeName)
 : origin(ALGPoint::zero)
@@ -45,18 +45,18 @@ void ALGNode::disconnect(ALGNode* leadingNode, ALGNode* trailingNode)
     if (!ALGNode::isConnected(leadingNode, trailingNode)) {
         throw ConnectException("Disconnect failed, already disconnected.");
     }
-    remove(leadingNode->outputNodes, trailingNode);
-    remove(trailingNode->inputNodes, leadingNode);
+    removeIn(leadingNode->outputNodes, trailingNode);
+    removeIn(trailingNode->inputNodes, leadingNode);
     cout << "did disconnect leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
 }
 
 bool ALGNode::isConnected(ALGNode* leadingNode, ALGNode* trailingNode) {
-    if (contains(leadingNode->outputNodes, [trailingNode](ALGNode* node) {
+    if (containsWhere(leadingNode->outputNodes, [trailingNode](ALGNode* node) {
         return isEqual(node->id, trailingNode->id);
     })) {
         return true;
     }
-    if (contains(trailingNode->inputNodes, [leadingNode](ALGNode* node) {
+    if (containsWhere(trailingNode->inputNodes, [leadingNode](ALGNode* node) {
         return isEqual(node->id, leadingNode->id);
     })) {
         return true;

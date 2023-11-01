@@ -23,6 +23,7 @@ public:
     ALGGroupNode(string typeName);
     
     void add(ALGNode* node);
+    void remove(ALGNode* node);
     
     void autoLayout(ALGLayout layout);
     
