@@ -2,7 +2,7 @@
 //  ALGNodeSection.hpp
 //  AutoLayoutGraph
 //
-//  Created by Heestand, Anton Norman | Anton | GSSD on 2023-10-31.
+//  Created by Anton Heestand on 2023-10-31.
 //
 
 #ifndef ALGNodeSection_hpp
@@ -10,13 +10,19 @@
 
 #include <vector>
 #include "ALGNode.hpp"
-#include "ALGLayout.hpp"
+#include "../Layout/ALGLayout.hpp"
 
 using namespace std;
 
 struct ALGNodeSection {
     
-    vector<ALGNode> nodes;
+    vector<ALGNode*> nodes;
+        
+    ~ALGNodeSection() {
+        for (ALGNode* node : nodes) {
+            delete node;
+        }
+    }
     
     ALGSize getSize(ALGLayout layout);
     void autoLayout(ALGLayout layout);

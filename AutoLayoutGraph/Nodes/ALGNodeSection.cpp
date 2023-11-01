@@ -2,7 +2,7 @@
 //  ALGNodeSection.cpp
 //  AutoLayoutGraph
 //
-//  Created by Heestand, Anton Norman | Anton | GSSD on 2023-10-31.
+//  Created by Anton Heestand on 2023-10-31.
 //
 
 #include "ALGNodeSection.hpp"
@@ -15,9 +15,9 @@ ALGSize ALGNodeSection::getSize(ALGLayout layout) {
     }
 
     ALGRect* frame = nullptr;
-    for(ALGNode& node : nodes) {
-        ALGPoint origin = node.origin;
-        ALGSize size = node.getSize(layout);
+    for(ALGNode* node : nodes) {
+        ALGPoint origin = node->origin;
+        ALGSize size = node->getSize(layout);
         if (frame == nullptr) {
             frame = new ALGRect(origin, size);
         } else {
@@ -36,7 +36,7 @@ ALGSize ALGNodeSection::getSize(ALGLayout layout) {
 
 void ALGNodeSection::autoLayout(ALGLayout layout) {
 
-    for(ALGNode& node : nodes) {
+    for(ALGNode* node : nodes) {
         // TODO: Implement
     }
 }

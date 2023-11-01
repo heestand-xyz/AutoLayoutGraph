@@ -2,7 +2,7 @@
 //  ALGNode.hpp
 //  AutoLayoutGraph
 //
-//  Created by Heestand, Anton Norman | Anton | GSSD on 2023-10-31.
+//  Created by Anton Heestand on 2023-10-31.
 //
 
 #ifndef ALGNode_hpp
@@ -10,9 +10,9 @@
 
 #include <uuid/uuid.h>
 #include <string>
-#include "ALGPoint.hpp"
-#include "ALGSize.hpp"
-#include "ALGLayout.hpp"
+#include "../Layout/ALGPoint.hpp"
+#include "../Layout/ALGSize.hpp"
+#include "../Layout/ALGLayout.hpp"
 
 using namespace std;
 

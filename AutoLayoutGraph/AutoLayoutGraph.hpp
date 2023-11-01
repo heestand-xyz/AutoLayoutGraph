@@ -2,7 +2,7 @@
 //  AutoLayoutGraph.hpp
 //  AutoLayoutGraph
 //
-//  Created by Heestand, Anton Norman | Anton | GSSD on 2023-10-31.
+//  Created by Anton Heestand on 2023-10-31.
 //
 
 #ifndef AutoLayoutGraph_
@@ -10,6 +10,10 @@
 
 /* The classes below are exported */
 #pragma GCC visibility push(default)
+
+#include "Nodes/ALGNode.hpp"
+#include "Nodes/ALGItemNode.hpp"
+#include "Nodes/ALGGroupNode.hpp"
 
 class AutoLayoutGraph
 {

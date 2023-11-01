@@ -2,7 +2,7 @@
 //  ALGGroupNode.hpp
 //  AutoLayoutGraph
 //
-//  Created by Heestand, Anton Norman | Anton | GSSD on 2023-10-31.
+//  Created by Anton Heestand on 2023-10-31.
 //
 
 #ifndef ALGGroupNode_hpp
@@ -11,7 +11,7 @@
 #include <vector>
 #include "ALGNode.hpp"
 #include "ALGNodeSection.hpp"
-#include "ALGLayout.hpp"
+#include "../Layout/ALGLayout.hpp"
 
 using namespace std;
 
@@ -21,6 +21,8 @@ public:
     vector<ALGNodeSection> sections;
     
     ALGGroupNode(string typeName);
+    
+    void add(ALGNode node);
     
     void autoLayout(ALGLayout layout);
     
