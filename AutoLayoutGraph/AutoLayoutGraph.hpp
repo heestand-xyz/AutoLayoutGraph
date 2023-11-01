@@ -8,7 +8,6 @@
 #ifndef AutoLayoutGraph_
 #define AutoLayoutGraph_
 
-/* The classes below are exported */
 #pragma GCC visibility push(default)
 
 #include "Nodes/ALGNode.hpp"

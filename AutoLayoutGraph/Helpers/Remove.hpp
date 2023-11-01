@@ -2,7 +2,7 @@
 //  Remove.hpp
 //  AutoLayoutGraph
 //
-//  Created by Heestand, Anton Norman | Anton | GSSD on 2023-11-01.
+//  Created by Anton Heestand on 2023-11-01.
 //
 
 #ifndef Remove_hpp
