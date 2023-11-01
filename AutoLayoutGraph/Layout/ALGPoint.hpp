@@ -16,6 +16,15 @@ struct ALGPoint {
     ALGPoint(int x, int y);
     
     static const ALGPoint zero;
+    
+    ALGPoint operator+(ALGPoint point);
+    ALGPoint operator-(ALGPoint point);
+    ALGPoint operator*(ALGPoint point);
+    ALGPoint operator/(ALGPoint point);
+    ALGPoint operator+(int point);
+    ALGPoint operator-(int point);
+    ALGPoint operator*(int point);
+    ALGPoint operator/(int point);
 };
 
 #endif /* ALGPoint_hpp */

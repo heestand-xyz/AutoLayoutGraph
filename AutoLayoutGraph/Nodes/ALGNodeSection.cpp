@@ -8,7 +8,7 @@
 #include "ALGNodeSection.hpp"
 #include "ALGRect.hpp"
 
-ALGSize ALGNodeSection::getSize() {
+ALGSize ALGNodeSection::getSize(ALGLayout layout) {
 
     if (nodes.empty()) {
         return ALGSize(0, 0);
@@ -17,7 +17,7 @@ ALGSize ALGNodeSection::getSize() {
     ALGRect* frame = nullptr;
     for(ALGNode& node : nodes) {
         ALGPoint origin = node.origin;
-        ALGSize size = node.getSize();
+        ALGSize size = node.getSize(layout);
         if (frame == nullptr) {
             frame = new ALGRect(origin, size);
         } else {
@@ -37,6 +37,6 @@ ALGSize ALGNodeSection::getSize() {
 void ALGNodeSection::autoLayout(ALGLayout layout) {
 
     for(ALGNode& node : nodes) {
-        
+        // TODO: Implement
     }
 }

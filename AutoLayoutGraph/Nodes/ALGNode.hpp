@@ -12,6 +12,7 @@
 #include <string>
 #include "ALGPoint.hpp"
 #include "ALGSize.hpp"
+#include "ALGLayout.hpp"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ public:
     ALGNode(string typeName);
     virtual ~ALGNode() {}
     
-    virtual ALGSize getSize() = 0;
+    virtual ALGSize getSize(ALGLayout layout) = 0;
 };
 
 #endif /* ALGNode_hpp */

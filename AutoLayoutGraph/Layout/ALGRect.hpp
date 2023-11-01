@@ -17,6 +17,8 @@ struct ALGRect {
     ALGSize size;
     
     ALGRect(ALGPoint origin, ALGSize size);
+    
+    ALGRect padding(int padding);
 };
 
 #endif /* ALGRect_hpp */

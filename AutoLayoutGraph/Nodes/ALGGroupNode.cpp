@@ -13,8 +13,9 @@ ALGGroupNode::ALGGroupNode(string typeName)
 {
 }
 
-ALGSize ALGGroupNode::getSize()
+ALGSize ALGGroupNode::getSize(ALGLayout layout)
 {
+    // TODO: Implement
     return ALGSize::zero;
 }
 

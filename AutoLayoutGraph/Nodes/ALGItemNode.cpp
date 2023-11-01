@@ -14,7 +14,7 @@ ALGItemNode::ALGItemNode(string typeName)
 }
 
 
-ALGSize ALGItemNode::getSize()
+ALGSize ALGItemNode::getSize(ALGLayout layout)
 {
-    return size;
+    return size.padding(layout.padding);
 }

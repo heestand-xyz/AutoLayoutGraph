@@ -17,6 +17,17 @@ struct ALGSize {
     
     static const ALGSize zero;
     static const ALGSize one;
+    
+    ALGSize padding(int padding);
+    
+    ALGSize operator+(ALGSize point);
+    ALGSize operator-(ALGSize point);
+    ALGSize operator*(ALGSize point);
+    ALGSize operator/(ALGSize point);
+    ALGSize operator+(int point);
+    ALGSize operator-(int point);
+    ALGSize operator*(int point);
+    ALGSize operator/(int point);
 };
 
 #endif /* ALGSize_hpp */

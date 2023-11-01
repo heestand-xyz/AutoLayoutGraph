@@ -18,7 +18,7 @@ struct ALGNodeSection {
     
     vector<ALGNode> nodes;
     
-    ALGSize getSize();
+    ALGSize getSize(ALGLayout layout);
     void autoLayout(ALGLayout layout);
 };
 

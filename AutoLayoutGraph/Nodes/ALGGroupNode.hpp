@@ -25,7 +25,7 @@ public:
     void autoLayout(ALGLayout layout);
     
 private:
-    ALGSize getSize();
+    ALGSize getSize(ALGLayout layout);
 };
 
 #endif /* ALGGroupNode_hpp */

@@ -13,3 +13,29 @@ ALGPoint::ALGPoint(int x, int y) {
 }
 
 const ALGPoint ALGPoint::zero(0, 0);
+
+ALGPoint ALGPoint::operator+(ALGPoint point) {
+    return ALGPoint(x + point.x, y + point.y);
+}
+ALGPoint ALGPoint::operator-(ALGPoint point) {
+    return ALGPoint(x - point.x, y - point.y);
+}
+ALGPoint ALGPoint::operator*(ALGPoint point) {
+    return ALGPoint(x * point.x, y * point.y);
+}
+ALGPoint ALGPoint::operator/(ALGPoint point) {
+    return ALGPoint(x / point.x, y / point.y);
+}
+
+ALGPoint ALGPoint::operator+(int value) {
+    return ALGPoint(x + value, y + value);
+}
+ALGPoint ALGPoint::operator-(int value) {
+    return ALGPoint(x - value, y - value);
+}
+ALGPoint ALGPoint::operator*(int value) {
+    return ALGPoint(x * value, y * value);
+}
+ALGPoint ALGPoint::operator/(int value) {
+    return ALGPoint(x / value, y / value);
+}

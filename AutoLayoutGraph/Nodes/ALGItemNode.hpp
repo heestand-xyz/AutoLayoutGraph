@@ -21,7 +21,7 @@ public:
     ALGItemNode(string typeName);
     
 private:
-    ALGSize getSize();
+    ALGSize getSize(ALGLayout layout);
 };
 
 #endif /* ALGItemNode_hpp */
