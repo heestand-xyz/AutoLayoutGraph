@@ -39,3 +39,8 @@ ALGPoint ALGPoint::operator*(int value) {
 ALGPoint ALGPoint::operator/(int value) {
     return ALGPoint(x / value, y / value);
 }
+
+ostream& operator<<(ostream& os, const ALGPoint& point) {
+    os << "point(x: " << point.x << ", y: " << point.y << ")";
+    return os;
+}

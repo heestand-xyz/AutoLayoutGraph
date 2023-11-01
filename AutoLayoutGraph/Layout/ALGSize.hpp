@@ -8,6 +8,10 @@
 #ifndef ALGSize_hpp
 #define ALGSize_hpp
 
+#include <iostream>
+
+using namespace std;
+
 struct ALGSize {
     
     int width;
@@ -28,6 +32,8 @@ struct ALGSize {
     ALGSize operator-(int point);
     ALGSize operator*(int point);
     ALGSize operator/(int point);
+    
+    friend ostream& operator<<(ostream& os, const ALGSize& size);
 };
 
 #endif /* ALGSize_hpp */

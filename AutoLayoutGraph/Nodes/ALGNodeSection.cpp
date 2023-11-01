@@ -5,8 +5,54 @@
 //  Created by Anton Heestand on 2023-10-31.
 //
 
+#include "ALGGroupNode.hpp"
 #include "ALGNodeSection.hpp"
 #include "ALGRect.hpp"
+
+bool ALGNodeSection::contains(ALGNode* node) {
+    for (ALGNode* n : nodes) {
+        if (n == node) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool ALGNodeSection::deepContains(ALGNode* node) {
+    if (contains(node)) {
+        return true;
+    }
+    for (ALGNode* n : nodes) {
+        ALGGroupNode* groupNode = dynamic_cast<ALGGroupNode*>(n);
+        if (groupNode) {
+            if (groupNode->deepContains(node)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool ALGNodeSection::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout) {
+    for (ALGNode* n : nodes) {
+        if (n == node) {
+            return node->hitTest(point, layout);
+        } else {
+            ALGGroupNode* groupNode = dynamic_cast<ALGGroupNode*>(n);
+            if (groupNode) {
+                if (groupNode->deepHitTest(node, point, layout)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+ALGPoint ALGNodeSection::getOrigin(ALGLayout layout) {
+    // TODO: Implement
+    return ALGPoint::zero;
+}
 
 ALGSize ALGNodeSection::getSize(ALGLayout layout) {
 
@@ -34,9 +80,12 @@ ALGSize ALGNodeSection::getSize(ALGLayout layout) {
     return totalSize;
 }
 
-void ALGNodeSection::autoLayout(ALGLayout layout) {
-
+vector<ALGNode*> ALGNodeSection::finalNodes() {
+    vector<ALGNode*> finalNodes = vector<ALGNode*>();
     for (ALGNode* node : nodes) {
-        // TODO: Implement
+        if (node->outputWires.empty()) {
+            finalNodes.push_back(node);
+        }
     }
+    return finalNodes;
 }

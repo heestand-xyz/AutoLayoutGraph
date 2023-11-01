@@ -15,6 +15,7 @@ class ALGWire;
 #include "../Wires/ALGWire.hpp"
 #include "../Layout/ALGPoint.hpp"
 #include "../Layout/ALGSize.hpp"
+#include "../Layout/ALGRect.hpp"
 #include "../Layout/ALGLayout.hpp"
 
 using namespace std;
@@ -33,6 +34,9 @@ public:
     virtual ~ALGNode() {}
     
     virtual ALGSize getSize(ALGLayout layout) = 0;
+    ALGPoint getOrigin(ALGLayout layout);
+    ALGRect getFrame(ALGLayout layout);
+    bool hitTest(ALGPoint point, ALGLayout layout);
     
     static void connect(ALGNode* leadingNode, ALGNode* trailingNode);
     static void disconnect(ALGNode* leadingNode, ALGNode* trailingNode);

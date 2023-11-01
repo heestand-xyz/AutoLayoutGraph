@@ -10,6 +10,7 @@
 
 #include <vector>
 #include "ALGNode.hpp"
+#include "ALGGroupNode.hpp"
 #include "../Layout/ALGLayout.hpp"
 
 using namespace std;
@@ -17,16 +18,15 @@ using namespace std;
 struct ALGNodeSection {
     
     vector<ALGNode*> nodes;
-        
-    ~ALGNodeSection() {
-        /// EXC_BAD_ACCESS
-//        for (ALGNode* node : nodes) {
-//            delete node;
-//        }
-    }
     
+    bool contains(ALGNode* node);
+    bool deepContains(ALGNode* node);
+    bool deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout);
+    
+    ALGPoint getOrigin(ALGLayout layout);
     ALGSize getSize(ALGLayout layout);
-    void autoLayout(ALGLayout layout);
+    
+    vector<ALGNode*> finalNodes();
 };
 
 #endif /* ALGNodeSection_hpp */

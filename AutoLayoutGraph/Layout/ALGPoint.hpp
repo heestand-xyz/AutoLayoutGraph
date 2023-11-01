@@ -8,6 +8,10 @@
 #ifndef ALGPoint_hpp
 #define ALGPoint_hpp
 
+#include <iostream>
+
+using namespace std;
+
 struct ALGPoint {
     
     int x;
@@ -25,6 +29,8 @@ struct ALGPoint {
     ALGPoint operator-(int point);
     ALGPoint operator*(int point);
     ALGPoint operator/(int point);
+    
+    friend ostream& operator<<(ostream& os, const ALGPoint& point);
 };
 
 #endif /* ALGPoint_hpp */

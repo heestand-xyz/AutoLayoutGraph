@@ -8,13 +8,13 @@
 #include "ALGItemNode.hpp"
 #include "ALGSize.hpp"
 
-ALGItemNode::ALGItemNode(string typeName)
-: ALGNode(typeName)
+ALGItemNode::ALGItemNode(string typeName, ALGSize size)
+: ALGNode(typeName), size(size)
 {
 }
 
 
 ALGSize ALGItemNode::getSize(ALGLayout layout)
 {
-    return size.padding(layout.padding);
+    return size;
 }

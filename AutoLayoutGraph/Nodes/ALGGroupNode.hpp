@@ -12,6 +12,7 @@
 #include "ALGNode.hpp"
 #include "ALGNodeSection.hpp"
 #include "../Layout/ALGLayout.hpp"
+#include "../Layout/ALGSize.hpp"
 
 using namespace std;
 
@@ -25,8 +26,10 @@ public:
     void add(ALGNode* node);
     void remove(ALGNode* node);
     
-    void autoLayout(ALGLayout layout);
-    
+    bool contains(ALGNode* node);
+    bool deepContains(ALGNode* node);
+    bool deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout);
+        
     ALGSize getSize(ALGLayout layout);
 };
 

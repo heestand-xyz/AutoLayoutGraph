@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include "ALGGroupNode.hpp"
-#include "ALGSize.hpp"
 #include "../Helpers/Remove.hpp"
 #include "../Helpers/Contains.hpp"
 #include "../Helpers/Equal.hpp"
@@ -74,9 +73,34 @@ ALGSize ALGGroupNode::getSize(ALGLayout layout)
     return totalSize.padding(layout.padding);
 }
 
-void ALGGroupNode::autoLayout(ALGLayout layout)
-{
-    for (ALGNodeSection& section : sections) {
-        section.autoLayout(layout);
+bool ALGGroupNode::contains(ALGNode* node) {
+    for (ALGNodeSection section : sections) {
+        if (section.contains(node)) {
+            return true;
+        }
     }
+    return false;
+}
+
+bool ALGGroupNode::deepContains(ALGNode* node) {
+    for (ALGNodeSection section : sections) {
+        if (section.deepContains(node)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool ALGGroupNode::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout) {
+    ALGPoint origin = getOrigin(layout);
+    ALGPoint sectionOrigin = ALGPoint(layout.padding, layout.padding);
+    for (int i = 0; i < sections.size(); i++) {
+        ALGNodeSection section = sections[i];
+        if (section.deepHitTest(node, point - origin - sectionOrigin, layout)) {
+            return true;
+        }
+        sectionOrigin.y += section.getSize(layout).height;
+        sectionOrigin.y += layout.spacing;
+    }
+    return false;
 }

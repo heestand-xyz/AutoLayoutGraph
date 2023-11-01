@@ -16,9 +16,9 @@ using namespace std;
 class ALGItemNode : public ALGNode {
     
 public:
-    ALGSize size = ALGSize::zero;
+    ALGSize size;
     
-    ALGItemNode(string typeName);
+    ALGItemNode(string typeName, ALGSize size);
     
     ALGSize getSize(ALGLayout layout);
 };

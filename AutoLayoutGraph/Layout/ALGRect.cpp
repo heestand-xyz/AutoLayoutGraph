@@ -14,3 +14,9 @@ ALGRect::ALGRect(ALGPoint origin, ALGSize size)
 ALGRect ALGRect::padding(int padding) {
     return ALGRect(origin - padding, size.padding(padding));
 }
+
+ostream& operator<<(ostream& os, const ALGRect& rect) {
+    os << "rect(origin: " << rect.origin << ", size: " << rect.size << ")";
+    return os;
+}
+

@@ -20,6 +20,24 @@ ALGNode::ALGNode(string typeName)
     this->typeName = typeName;
 }
 
+ALGPoint ALGNode::getOrigin(ALGLayout layout) {
+    // TODO: Implement
+    return ALGPoint::zero;
+}
+
+ALGRect ALGNode::getFrame(ALGLayout layout) {
+    ALGPoint origin = getOrigin(layout);
+    ALGSize size = getSize(layout);
+    return ALGRect(origin, size);
+}
+
+bool ALGNode::hitTest(ALGPoint point, ALGLayout layout) {
+    ALGRect frame = getFrame(layout);
+    bool hitX = point.x >= frame.origin.x && point.x < frame.origin.x + frame.size.width;
+    bool hitY = point.y >= frame.origin.y && point.y < frame.origin.y + frame.size.height;
+    return hitX && hitY;
+}
+
 class ConnectException : public std::runtime_error {
 public:
     ConnectException(const std::string& message) : std::runtime_error(message) {}

@@ -44,3 +44,8 @@ ALGSize ALGSize::operator*(int value) {
 ALGSize ALGSize::operator/(int value) {
     return ALGSize(width / value, height / value);
 }
+
+ostream& operator<<(ostream& os, const ALGSize& size) {
+    os << "size(width: " << size.width << ", height: " << size.height << ")";
+    return os;
+}
