@@ -23,10 +23,22 @@ public:
     string typeName;
     ALGPoint origin;
     
+    vector<ALGNode*> inputNodes;
+    vector<ALGNode*> outputNodes;
+    
     ALGNode(string typeName);
     virtual ~ALGNode() {}
     
     virtual ALGSize getSize(ALGLayout layout) = 0;
+    
+    static void connect(ALGNode* leadingNode, ALGNode* trailingNode);
+    static void disconnect(ALGNode* leadingNode, ALGNode* trailingNode);
+    
+    static bool isConnected(ALGNode* leadingNode, ALGNode* trailingNode);
+    static bool isLoop(ALGNode* leadingNode, ALGNode* trailingNode);
+    
+    bool containsDownstream(uuid_t id);
+    bool containsUpstream(uuid_t id);
 };
 
 #endif /* ALGNode_hpp */

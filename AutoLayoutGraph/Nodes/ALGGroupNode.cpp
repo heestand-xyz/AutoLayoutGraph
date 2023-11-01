@@ -14,23 +14,35 @@ ALGGroupNode::ALGGroupNode(string typeName)
 {
 }
 
-void ALGGroupNode::add(ALGNode node) {
-    std::cout << "will add node: " << node.typeName << endl;
+void ALGGroupNode::add(ALGNode* node) {
+    cout << "will add node: " << node->typeName << endl;
     ALGNodeSection section = ALGNodeSection();
-    section.nodes.push_back(&node);
+    section.nodes.push_back(node);
     sections.push_back(section);
-    std::cout << "did add node: " << node.typeName << endl;
+    cout << "did add node: " << node->typeName << endl;
 }
 
 ALGSize ALGGroupNode::getSize(ALGLayout layout)
 {
-    // TODO: Implement
-    return ALGSize::zero;
+    if (sections.empty()) {
+        return ALGSize::zero;
+    }
+    ALGSize totalSize = ALGSize::zero;
+    for (int i = 0; i < sections.size(); ++i) {
+        if (i != 0) {
+            totalSize.height += layout.spacing;
+        }
+        ALGNodeSection section = sections[i];
+        ALGSize sectionSize = section.getSize(layout);
+        totalSize.width = max(totalSize.width, sectionSize.width);
+        totalSize.height += sectionSize.height;
+    }
+    return totalSize.padding(layout.padding);
 }
 
 void ALGGroupNode::autoLayout(ALGLayout layout)
 {
-    for(ALGNodeSection& section : sections) {
+    for (ALGNodeSection& section : sections) {
         section.autoLayout(layout);
     }
 }

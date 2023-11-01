@@ -19,9 +19,10 @@ struct ALGNodeSection {
     vector<ALGNode*> nodes;
         
     ~ALGNodeSection() {
-        for (ALGNode* node : nodes) {
-            delete node;
-        }
+        /// EXC_BAD_ACCESS
+//        for (ALGNode* node : nodes) {
+//            delete node;
+//        }
     }
     
     ALGSize getSize(ALGLayout layout);

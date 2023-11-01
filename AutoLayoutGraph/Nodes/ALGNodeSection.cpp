@@ -11,32 +11,32 @@
 ALGSize ALGNodeSection::getSize(ALGLayout layout) {
 
     if (nodes.empty()) {
-        return ALGSize(0, 0);
+        return ALGSize::zero;
     }
 
-    ALGRect* frame = nullptr;
-    for(ALGNode* node : nodes) {
+    ALGRect* totalFrame = nullptr;
+    for (ALGNode* node : nodes) {
         ALGPoint origin = node->origin;
         ALGSize size = node->getSize(layout);
-        if (frame == nullptr) {
-            frame = new ALGRect(origin, size);
+        if (totalFrame == nullptr) {
+            totalFrame = new ALGRect(origin, size);
         } else {
-            frame->origin.x = min(frame->origin.x, origin.x);
-            frame->origin.y = min(frame->origin.y, origin.y);
-            frame->size.width = max(frame->size.width, origin.x + size.width - frame->origin.x);
-            frame->size.height = max(frame->size.height, origin.y + size.height - frame->origin.y);
+            totalFrame->origin.x = min(totalFrame->origin.x, origin.x);
+            totalFrame->origin.y = min(totalFrame->origin.y, origin.y);
+            totalFrame->size.width = max(totalFrame->size.width, origin.x + size.width - totalFrame->origin.x);
+            totalFrame->size.height = max(totalFrame->size.height, origin.y + size.height - totalFrame->origin.y);
         }
     }
     
-    ALGSize size = frame->size;
-    delete frame;
+    ALGSize totalSize = totalFrame->size;
+    delete totalFrame;
     
-    return size;
+    return totalSize;
 }
 
 void ALGNodeSection::autoLayout(ALGLayout layout) {
 
-    for(ALGNode* node : nodes) {
+    for (ALGNode* node : nodes) {
         // TODO: Implement
     }
 }
