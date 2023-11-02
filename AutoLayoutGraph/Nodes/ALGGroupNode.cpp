@@ -113,3 +113,11 @@ bool ALGGroupNode::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout) 
     }
     return false;
 }
+
+void ALGGroupNode::sectionConnection(ALGWire* wire) {
+    
+}
+
+void ALGGroupNode::sectionDisconnection(ALGWire* wire) {
+    
+}

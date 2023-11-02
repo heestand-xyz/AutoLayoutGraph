@@ -35,8 +35,6 @@ public:
     ALGNode(string typeName);
     virtual ~ALGNode() {}
     
-    void removeFromParent();
-    
     virtual ALGSize getSize(ALGLayout layout) = 0;
     ALGPoint getOrigin(ALGLayout layout);
     ALGRect getFrame(ALGLayout layout);
@@ -44,6 +42,7 @@ public:
     
     static void connect(ALGNode* leadingNode, ALGNode* trailingNode);
     static void disconnect(ALGNode* leadingNode, ALGNode* trailingNode);
+    static void connect(ALGWire*);
     static void disconnect(ALGWire*);
     
     static ALGWire* optionalWire(ALGNode* leadingNode, ALGNode* trailingNode);
@@ -52,6 +51,8 @@ public:
     
     bool containsDownstream(uuid_t id);
     bool containsUpstream(uuid_t id);
+    
+    void removeFromParent();
 };
 
 #endif /* ALGNode_hpp */

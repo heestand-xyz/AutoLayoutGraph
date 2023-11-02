@@ -10,6 +10,7 @@
 
 #include <vector>
 #include "ALGNode.hpp"
+#include "../Wires/ALGWire.hpp"
 #include "../Layout/ALGLayout.hpp"
 #include "../Layout/ALGSize.hpp"
 
@@ -32,6 +33,9 @@ public:
     bool deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout);
         
     ALGSize getSize(ALGLayout layout);
+    
+    void sectionConnection(ALGWire* wire);
+    void sectionDisconnection(ALGWire* wire);
 };
 
 #endif /* ALGGroupNode_hpp */
