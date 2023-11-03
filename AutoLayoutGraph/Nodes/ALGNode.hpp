@@ -8,7 +8,6 @@
 #ifndef ALGNode_hpp
 #define ALGNode_hpp
 
-#include <uuid/uuid.h>
 #include <string>
 #include "../Layout/ALGLayout.hpp"
 #include "../Layout/Types/ALGPoint.hpp"
@@ -24,7 +23,6 @@ class ALGWire;
 class ALGNode {
     
 public:
-    uuid_t id;
     string typeName;
     ALGPosition position;
     
@@ -39,19 +37,9 @@ public:
     virtual ALGSize size(ALGLayout layout) = 0;
     bool hitTest(ALGPoint point, ALGLayout layout);
     
-    static void connect(ALGNode* leadingNode, ALGNode* trailingNode);
-    static void disconnect(ALGNode* leadingNode, ALGNode* trailingNode);
-    static void connect(ALGWire*);
-    static void disconnect(ALGWire*);
+    bool containsDownstream(ALGNode* node);
+    bool containsUpstream(ALGNode* node);
     
-    static ALGWire* optionalWire(ALGNode* leadingNode, ALGNode* trailingNode);
-    static bool isConnected(ALGNode* leadingNode, ALGNode* trailingNode);
-    static bool isLoop(ALGNode* leadingNode, ALGNode* trailingNode);
-    
-    bool containsDownstream(uuid_t id);
-    bool containsUpstream(uuid_t id);
-    
-    void removeFromParent();
     ALGGroupNode* root();
     
     ALGNodeSection* section();

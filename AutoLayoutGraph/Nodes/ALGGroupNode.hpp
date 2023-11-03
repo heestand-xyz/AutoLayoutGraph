@@ -25,8 +25,8 @@ public:
     
     ALGGroupNode(string typeName);
     
-    void add(ALGNode* node);
-    void remove(ALGNode* node);
+    void add(ALGNode* node, ALGLayout layout);
+    void remove(ALGNode* node, ALGLayout layout);
     
     vector<ALGNode*> allNodes();
     

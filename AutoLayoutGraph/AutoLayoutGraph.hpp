@@ -20,8 +20,22 @@ using namespace std;
 class AutoLayoutGraph {
     
     ALGLayout layout;
+    void disconnectWire(ALGWire* wire);
+    
+public:
     
     AutoLayoutGraph(ALGLayout layout);
+    
+    void addToParent(ALGGroupNode* parentNode, ALGNode* node);
+    void moveToNewParent(ALGGroupNode* parentNode, ALGNode* node);
+    void removeFromParent(ALGNode* node);
+    
+    void connectWire(ALGNode* leadingNode, ALGNode* trailingNode);
+    void disconnectWire(ALGNode* leadingNode, ALGNode* trailingNode);
+    
+    static ALGWire* optionalWire(ALGNode* leadingNode, ALGNode* trailingNode);
+    static bool isConnected(ALGNode* leadingNode, ALGNode* trailingNode);
+    static bool isLoop(ALGNode* leadingNode, ALGNode* trailingNode);
 };
 
 #pragma GCC visibility pop

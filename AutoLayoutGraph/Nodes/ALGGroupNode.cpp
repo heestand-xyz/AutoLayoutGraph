@@ -11,7 +11,6 @@
 #include "../Helpers/First.hpp"
 #include "../Helpers/Remove.hpp"
 #include "../Helpers/Contains.hpp"
-#include "../Helpers/Equal.hpp"
 #include "../Helpers/Append.hpp"
 
 ALGGroupNode::ALGGroupNode(string typeName)
@@ -22,57 +21,6 @@ class ALGGroupNodeException : public runtime_error {
 public:
     ALGGroupNodeException(const string& message) : runtime_error(message) {}
 };
-
-// MARK: - Add
-
-void ALGGroupNode::add(ALGNode* node) {
-    cout << "will add node: " << node->typeName << endl;
-    if (node->parent) {
-        throw ALGGroupNodeException("Add node failed, node already has a parent.");
-    }
-    if (!node->inputWires.empty() || !node->outputWires.empty()) {
-        throw ALGGroupNodeException("Add node failed, node is connected.");
-    }
-    ALGNodeSection* section = addSection();
-    section->nodes.push_back(node);
-    node->parent = this;
-//    node->root()->autoLayout();
-    cout << "did add node: " << node->typeName << endl;
-}
-
-// MARK: - Remove
-
-void ALGGroupNode::remove(ALGNode* node) {
-    cout << "will remove node: " << node->typeName << endl;
-    if (node->parent == nullptr) {
-        throw ALGGroupNodeException("Remove node failed, node parent not found.");
-    }
-    for (ALGWire* wire : node->inputWires) {
-        ALGNode::disconnect(wire);
-    }
-    for (ALGWire* wire : node->outputWires) {
-        ALGNode::disconnect(wire);
-    }
-    bool didRemove = false;
-    for (ALGNodeSection* section : sections) {
-        if (containsWhere(section->nodes, [node](ALGNode* sectionNode) {
-            return isEqual(sectionNode->id, node->id);
-        })) {
-            removeIn(section->nodes, node);
-            if (section->nodes.empty()) {
-                removeSection(section);
-            }
-            didRemove = true;
-            break;
-        }
-    }
-    if (!didRemove) {
-        throw ALGGroupNodeException("Remove node failed, not found in group.");
-    }
-//    node->root()->autoLayout();
-    node->parent = nullptr;
-    cout << "did remove node: " << node->typeName << endl;
-}
 
 // MARK: - Nodes
 
