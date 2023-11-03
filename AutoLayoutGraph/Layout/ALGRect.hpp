@@ -21,7 +21,7 @@ struct ALGRect {
     
     ALGRect(ALGPoint origin, ALGSize size);
     
-    ALGRect padding(int padding);
+    ALGRect padding(double padding);
     
     friend ostream& operator<<(ostream& os, const ALGRect& rect);
 };

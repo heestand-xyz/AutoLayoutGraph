@@ -21,21 +21,29 @@ using namespace std;
 class ALGGroupNode : public ALGNode {
     
 public:
-    vector<ALGNodeSection> sections;
+    vector<ALGNodeSection*> sections;
     
     ALGGroupNode(string typeName);
     
     void add(ALGNode* node);
     void remove(ALGNode* node);
     
+    vector<ALGNode*> allNodes();
+    
     bool contains(ALGNode* node);
     bool deepContains(ALGNode* node);
     bool deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout);
         
-    ALGSize getSize(ALGLayout layout);
+    ALGSize size(ALGLayout layout);
+    ALGRect deepFrame(ALGNode* node, ALGLayout layout);
     
-    void sectionConnection(ALGWire* wire);
-    void sectionDisconnection(ALGWire* wire);
+    void updateSectionsOnDidConnect(ALGWire* wire);
+    void updateSectionsOnDidDisconnect(ALGWire* wire);
+    
+    ALGNodeSection* addSection();
+    void removeSection(ALGNodeSection* section);
+    
+    bool isRoot();
 };
 
 #endif /* ALGGroupNode_hpp */

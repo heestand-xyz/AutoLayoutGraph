@@ -7,7 +7,7 @@
 
 #include "ALGSize.hpp"
 
-ALGSize::ALGSize(int width, int height) {
+ALGSize::ALGSize(double width, double height) {
     this->width = width;
     this->height = height;
 }
@@ -15,7 +15,7 @@ ALGSize::ALGSize(int width, int height) {
 const ALGSize ALGSize::zero(0, 0);
 const ALGSize ALGSize::one(1, 1);
 
-ALGSize ALGSize::padding(int padding) {
+ALGSize ALGSize::padding(double padding) {
     return ALGSize(width, height) + padding * 2;
 }
 
@@ -32,16 +32,16 @@ ALGSize ALGSize::operator/(ALGSize size) {
     return ALGSize(width / size.width, height / size.height);
 }
 
-ALGSize ALGSize::operator+(int value) {
+ALGSize ALGSize::operator+(double value) {
     return ALGSize(width + value, height + value);
 }
-ALGSize ALGSize::operator-(int value) {
+ALGSize ALGSize::operator-(double value) {
     return ALGSize(width - value, height - value);
 }
-ALGSize ALGSize::operator*(int value) {
+ALGSize ALGSize::operator*(double value) {
     return ALGSize(width * value, height * value);
 }
-ALGSize ALGSize::operator/(int value) {
+ALGSize ALGSize::operator/(double value) {
     return ALGSize(width / value, height / value);
 }
 

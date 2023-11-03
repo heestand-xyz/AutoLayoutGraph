@@ -17,6 +17,8 @@ using namespace std;
 
 struct ALGNodeSection {
     
+    ALGGroupNode* group = nullptr;
+
     vector<ALGNode*> nodes;
     
     bool contains(ALGNode* node);
@@ -24,7 +26,7 @@ struct ALGNodeSection {
     bool deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout);
     
     ALGPoint getOrigin(ALGLayout layout);
-    ALGSize getSize(ALGLayout layout);
+    ALGSize size(ALGLayout layout);
     
     vector<ALGNode*> finalNodes();
 };

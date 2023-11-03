@@ -14,10 +14,10 @@ using namespace std;
 
 struct ALGPoint {
     
-    int x;
-    int y;
+    double x;
+    double y;
     
-    ALGPoint(int x, int y);
+    ALGPoint(double x, double y);
     
     static const ALGPoint zero;
     
@@ -25,10 +25,10 @@ struct ALGPoint {
     ALGPoint operator-(ALGPoint point);
     ALGPoint operator*(ALGPoint point);
     ALGPoint operator/(ALGPoint point);
-    ALGPoint operator+(int point);
-    ALGPoint operator-(int point);
-    ALGPoint operator*(int point);
-    ALGPoint operator/(int point);
+    ALGPoint operator+(double point);
+    ALGPoint operator-(double point);
+    ALGPoint operator*(double point);
+    ALGPoint operator/(double point);
     
     friend ostream& operator<<(ostream& os, const ALGPoint& point);
 };

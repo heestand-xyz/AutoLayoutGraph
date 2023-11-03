@@ -7,7 +7,7 @@
 
 #include "ALGPoint.hpp"
 
-ALGPoint::ALGPoint(int x, int y) {
+ALGPoint::ALGPoint(double x, double y) {
     this->x = x;
     this->y = y;
 }
@@ -27,16 +27,16 @@ ALGPoint ALGPoint::operator/(ALGPoint point) {
     return ALGPoint(x / point.x, y / point.y);
 }
 
-ALGPoint ALGPoint::operator+(int value) {
+ALGPoint ALGPoint::operator+(double value) {
     return ALGPoint(x + value, y + value);
 }
-ALGPoint ALGPoint::operator-(int value) {
+ALGPoint ALGPoint::operator-(double value) {
     return ALGPoint(x - value, y - value);
 }
-ALGPoint ALGPoint::operator*(int value) {
+ALGPoint ALGPoint::operator*(double value) {
     return ALGPoint(x * value, y * value);
 }
-ALGPoint ALGPoint::operator/(int value) {
+ALGPoint ALGPoint::operator/(double value) {
     return ALGPoint(x / value, y / value);
 }
 

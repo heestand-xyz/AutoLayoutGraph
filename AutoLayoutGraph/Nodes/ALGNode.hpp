@@ -35,9 +35,7 @@ public:
     ALGNode(string typeName);
     virtual ~ALGNode() {}
     
-    virtual ALGSize getSize(ALGLayout layout) = 0;
-    ALGPoint getOrigin(ALGLayout layout);
-    ALGRect getFrame(ALGLayout layout);
+    virtual ALGSize size(ALGLayout layout) = 0;
     bool hitTest(ALGPoint point, ALGLayout layout);
     
     static void connect(ALGNode* leadingNode, ALGNode* trailingNode);

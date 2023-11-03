@@ -14,24 +14,24 @@ using namespace std;
 
 struct ALGSize {
     
-    int width;
-    int height;
+    double width;
+    double height;
     
-    ALGSize(int width, int height);
+    ALGSize(double width, double height);
     
     static const ALGSize zero;
     static const ALGSize one;
     
-    ALGSize padding(int padding);
+    ALGSize padding(double padding);
     
     ALGSize operator+(ALGSize point);
     ALGSize operator-(ALGSize point);
     ALGSize operator*(ALGSize point);
     ALGSize operator/(ALGSize point);
-    ALGSize operator+(int point);
-    ALGSize operator-(int point);
-    ALGSize operator*(int point);
-    ALGSize operator/(int point);
+    ALGSize operator+(double point);
+    ALGSize operator-(double point);
+    ALGSize operator*(double point);
+    ALGSize operator/(double point);
     
     friend ostream& operator<<(ostream& os, const ALGSize& size);
 };

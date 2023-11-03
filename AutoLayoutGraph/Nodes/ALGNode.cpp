@@ -21,30 +21,17 @@ ALGNode::ALGNode(string typeName)
     uuid_generate(id);
 }
 
-class NodeException : public std::runtime_error {
+class ALGNodeException : public runtime_error {
 public:
-    NodeException(const std::string& message) : std::runtime_error(message) {}
+    ALGNodeException(const string& message) : runtime_error(message) {}
 };
-
-// MARK: - Layout
-
-ALGPoint ALGNode::getOrigin(ALGLayout layout) {
-    // TODO: Implement
-    return ALGPoint::zero;
-}
-
-ALGRect ALGNode::getFrame(ALGLayout layout) {
-    ALGPoint origin = getOrigin(layout);
-    ALGSize size = getSize(layout);
-    return ALGRect(origin, size);
-}
 
 // MARK: - Hit Test
 
 bool ALGNode::hitTest(ALGPoint point, ALGLayout layout) {
-    ALGRect frame = getFrame(layout);
-    bool hitX = point.x >= frame.origin.x && point.x < frame.origin.x + frame.size.width;
-    bool hitY = point.y >= frame.origin.y && point.y < frame.origin.y + frame.size.height;
+    ALGSize size = this->size(layout);
+    bool hitX = point.x >= 0 && point.x < size.width;
+    bool hitY = point.y >= 0 && point.y < size.height;
     return hitX && hitY;
 }
 
@@ -54,10 +41,10 @@ void ALGNode::connect(ALGNode* leadingNode, ALGNode* trailingNode)
 {
     cout << "will connect leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
     if (ALGNode::isConnected(leadingNode, trailingNode)) {
-        throw NodeException("Connection failed, already connected.");
+        throw ALGNodeException("Connection failed, already connected.");
     }
     if (ALGNode::isLoop(leadingNode, trailingNode)) {
-        throw NodeException("Connection failed, loop found.");
+        throw ALGNodeException("Connection failed, loop found.");
     }
     ALGWire* wire = new ALGWire(leadingNode, trailingNode);
     connect(wire);
@@ -69,10 +56,7 @@ void ALGNode::connect(ALGWire* wire)
     cout << "will connect wire" << endl;
     wire->leadingNode->outputWires.push_back(wire);
     wire->trailingNode->inputWires.push_back(wire);
-    wire->leadingNode->parent->sectionConnection(wire);
-    if (wire->leadingNode->parent != wire->trailingNode->parent) {
-        wire->trailingNode->parent->sectionConnection(wire);
-    }
+    wire->commonParent()->updateSectionsOnDidConnect(wire);
     cout << "did connect wire" << endl;
 }
 
@@ -82,11 +66,11 @@ void ALGNode::disconnect(ALGNode* leadingNode, ALGNode* trailingNode)
 {
     cout << "will disconnect leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
     if (!ALGNode::isConnected(leadingNode, trailingNode)) {
-        throw NodeException("Disconnect failed, already disconnected.");
+        throw ALGNodeException("Disconnect failed, already disconnected.");
     }
     ALGWire* wire = optionalWire(leadingNode, trailingNode);
     if (wire == nullptr) {
-        throw NodeException("Disconnect failed, wire not found.");
+        throw ALGNodeException("Disconnect failed, wire not found.");
     }
     ALGNode::disconnect(wire);
     delete wire;
@@ -98,10 +82,7 @@ void ALGNode::disconnect(ALGWire* wire)
     cout << "will disconnect wire" << endl;
     removeIn(wire->leadingNode->outputWires, wire);
     removeIn(wire->trailingNode->inputWires, wire);
-    wire->leadingNode->parent->sectionDisconnection(wire);
-    if (wire->leadingNode->parent != wire->trailingNode->parent) {
-        wire->trailingNode->parent->sectionDisconnection(wire);
-    }
+    wire->commonParent()->updateSectionsOnDidDisconnect(wire);
     cout << "did disconnect wire" << endl;
 }
 
@@ -161,7 +142,7 @@ bool ALGNode::containsUpstream(uuid_t id)
 
 void ALGNode::removeFromParent() {
     if (parent == nullptr) {
-        throw NodeException("Remove from parent failed, no parent found.");
+        throw ALGNodeException("Remove from parent failed, no parent found.");
     }
     parent->remove(this);
 }

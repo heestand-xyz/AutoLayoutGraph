@@ -7,7 +7,7 @@
 
 #include "ALGLayout.hpp"
 
-ALGLayout::ALGLayout(int padding, int spacing) {
+ALGLayout::ALGLayout(double padding, double spacing) {
     this->padding = padding;
     this->spacing = spacing;
 }

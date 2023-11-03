@@ -16,11 +16,11 @@ using namespace std;
 class ALGItemNode : public ALGNode {
     
 public:
-    ALGSize size;
+    ALGSize fixedSize;
     
     ALGItemNode(string typeName, ALGSize size);
     
-    ALGSize getSize(ALGLayout layout);
+    ALGSize size(ALGLayout layout);
 };
 
 #endif /* ALGItemNode_hpp */

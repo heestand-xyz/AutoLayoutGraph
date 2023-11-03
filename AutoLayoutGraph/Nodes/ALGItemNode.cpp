@@ -9,12 +9,12 @@
 #include "ALGSize.hpp"
 
 ALGItemNode::ALGItemNode(string typeName, ALGSize size)
-: ALGNode(typeName), size(size)
+: ALGNode(typeName), fixedSize(size)
 {
 }
 
 
-ALGSize ALGItemNode::getSize(ALGLayout layout)
+ALGSize ALGItemNode::size(ALGLayout layout)
 {
-    return size;
+    return fixedSize;
 }

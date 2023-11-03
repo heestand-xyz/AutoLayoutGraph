@@ -8,10 +8,10 @@
 #ifndef ALGWireLength_hpp
 #define ALGWireLength_hpp
 
-enum class ALGWireLength : int {
-    NEAR,
-    AUTO,
-    FAR,
-};
+//enum class ALGWireLength : int {
+//    NEAR,
+//    AUTO,
+//    FAR,
+//};
 
 #endif /* ALGWireLength_hpp */

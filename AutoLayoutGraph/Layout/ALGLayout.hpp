@@ -13,10 +13,10 @@
 
 struct ALGLayout {
     
-    int padding;
-    int spacing;
+    double padding;
+    double spacing;
     
-    ALGLayout(int padding, int spacing);
+    ALGLayout(double padding, double spacing);
 };
 
 #endif /* ALGLayout_hpp */

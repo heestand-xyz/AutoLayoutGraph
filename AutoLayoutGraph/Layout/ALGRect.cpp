@@ -11,7 +11,7 @@ ALGRect::ALGRect(ALGPoint origin, ALGSize size)
 : origin(origin), size(size)
 { }
 
-ALGRect ALGRect::padding(int padding) {
+ALGRect ALGRect::padding(double padding) {
     return ALGRect(origin - padding, size.padding(padding));
 }
 

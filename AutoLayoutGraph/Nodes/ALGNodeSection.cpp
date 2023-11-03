@@ -50,11 +50,18 @@ bool ALGNodeSection::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout
 }
 
 ALGPoint ALGNodeSection::getOrigin(ALGLayout layout) {
-    // TODO: Implement
-    return ALGPoint::zero;
+    ALGPoint origin = ALGPoint(layout.padding, layout.padding);
+    for (ALGNodeSection* section : group->sections) {
+        if (section == this) {
+            
+        }
+        origin.y += section->size(layout).height;
+        origin.y += layout.spacing;
+    }
+    return origin;
 }
 
-ALGSize ALGNodeSection::getSize(ALGLayout layout) {
+ALGSize ALGNodeSection::size(ALGLayout layout) {
 
     if (nodes.empty()) {
         return ALGSize::zero;
@@ -63,7 +70,7 @@ ALGSize ALGNodeSection::getSize(ALGLayout layout) {
     ALGRect* totalFrame = nullptr;
     for (ALGNode* node : nodes) {
         ALGPoint origin = node->origin;
-        ALGSize size = node->getSize(layout);
+        ALGSize size = node->size(layout);
         if (totalFrame == nullptr) {
             totalFrame = new ALGRect(origin, size);
         } else {
