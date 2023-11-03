@@ -36,7 +36,7 @@ void ALGGroupNode::add(ALGNode* node) {
     ALGNodeSection* section = addSection();
     section->nodes.push_back(node);
     node->parent = this;
-    node->root()->autoLayout();
+//    node->root()->autoLayout();
     cout << "did add node: " << node->typeName << endl;
 }
 
@@ -69,7 +69,7 @@ void ALGGroupNode::remove(ALGNode* node) {
     if (!didRemove) {
         throw ALGGroupNodeException("Remove node failed, not found in group.");
     }
-    node->root()->autoLayout();
+//    node->root()->autoLayout();
     node->parent = nullptr;
     cout << "did remove node: " << node->typeName << endl;
 }
@@ -220,9 +220,10 @@ bool ALGGroupNode::isRoot() {
 
 // MARK: - Auto Layout
 
-void ALGGroupNode::autoLayout() {
-    
+void ALGGroupNode::autoLayout(ALGLayout layout) {
+    cout << "will auto layout group node: " << typeName << endl;
     for (ALGNodeSection* section : sections) {
-        section->autoLayout();
+        section->autoLayout(layout);
     }
+    cout << "did auto layout group node: " << typeName << endl;
 }

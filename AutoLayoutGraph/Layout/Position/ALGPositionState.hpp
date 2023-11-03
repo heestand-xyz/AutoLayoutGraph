@@ -10,6 +10,7 @@
 
 enum class ALGPositionState : int {
     NONE,
+    AUTO,
     DONE
 };
 

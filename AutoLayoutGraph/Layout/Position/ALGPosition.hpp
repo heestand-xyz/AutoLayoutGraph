@@ -15,13 +15,11 @@ class ALGNodeSection;
 
 struct ALGPosition {
     
-private:
-    ALGPoint point = ALGPoint::zero;
+    ALGPoint origin = ALGPoint::zero;
     
-public:
     ALGPositionState state = ALGPositionState::NONE;
-    
-    ALGPoint origin(ALGNodeSection* section);
+        
+    ALGPoint originInSection(ALGNodeSection* section);
 };
 
 #endif /* ALGPosition_hpp */

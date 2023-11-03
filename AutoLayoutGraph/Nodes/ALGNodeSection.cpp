@@ -9,6 +9,11 @@
 #include "ALGGroupNode.hpp"
 #include "ALGRect.hpp"
 
+class ALGNodeSectionException : public runtime_error {
+public:
+    ALGNodeSectionException(const string& message) : runtime_error(message) {}
+};
+
 // MARK: - Contains
 
 bool ALGNodeSection::contains(ALGNode* node) {
@@ -75,7 +80,7 @@ ALGSize ALGNodeSection::size(ALGLayout layout) {
 
     ALGRect* totalFrame = nullptr;
     for (ALGNode* node : nodes) {
-        ALGPoint origin = node->position.origin(this);
+        ALGPoint origin = node->position.originInSection(this);
         ALGSize size = node->size(layout);
         if (totalFrame == nullptr) {
             totalFrame = new ALGRect(origin, size);
@@ -107,14 +112,29 @@ vector<ALGNode*> ALGNodeSection::finalNodes() {
 
 // MARK: - Auto Layout
 
-void ALGNodeSection::autoLayout() {
-    
+void ALGNodeSection::autoLayout(ALGLayout layout) {
+    cout << "will auto layout node section: " << group->typeName << ":" << index() << endl;
     for (ALGNode* node : nodes) {
         ALGGroupNode* groupNode = dynamic_cast<ALGGroupNode*>(node);
         if (groupNode) {
-            groupNode->autoLayout();
+            groupNode->autoLayout(layout);
+        }
+    }
+    ALGNode* firstNode = nodes[0];
+    firstNode->autoLayout(layout);
+    cout << "did auto layout node section: " << group->typeName << ":" << index() << endl;
+}
+
+// MARK: - Index
+
+int ALGNodeSection::index() {
+    
+    for (int i = 0; i < group->sections.size(); i++) {
+        ALGNodeSection* section = group->sections[i];
+        if (section == this) {
+            return i;
         }
     }
     
-    // ...
+    throw ALGNodeSectionException("Section index not found.");
 }

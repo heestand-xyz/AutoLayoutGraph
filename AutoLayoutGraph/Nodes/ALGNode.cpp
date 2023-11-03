@@ -15,6 +15,7 @@
 #include "../Helpers/Remove.hpp"
 #include "../Helpers/Contains.hpp"
 #include "../Helpers/Equal.hpp"
+#include "../Helpers/Append.hpp"
 
 ALGNode::ALGNode(string typeName)
 : typeName(typeName), position(ALGPosition())
@@ -30,7 +31,7 @@ public:
 // MARK: - Hit Test
 
 bool ALGNode::hitTest(ALGPoint point, ALGLayout layout) {
-    ALGPoint origin = this->position.origin(section());
+    ALGPoint origin = this->position.originInSection(section());
     ALGSize size = this->size(layout);
     bool hitX = point.x >= origin.x && point.x < origin.x + size.width;
     bool hitY = point.y >= origin.y && point.y < origin.y + size.height;
@@ -60,7 +61,7 @@ void ALGNode::connect(ALGWire* wire)
     wire->trailingNode->inputWires.push_back(wire);
     ALGGroupNode* commonParent = wire->commonParent();
     commonParent->updateSectionsOnDidConnect(wire);
-    commonParent->root()->autoLayout();
+//    commonParent->root()->autoLayout();
     cout << "did connect wire" << endl;
 }
 
@@ -88,7 +89,7 @@ void ALGNode::disconnect(ALGWire* wire)
     removeIn(wire->trailingNode->inputWires, wire);
     ALGGroupNode* commonParent = wire->commonParent();
     commonParent->updateSectionsOnDidDisconnect(wire);
-    commonParent->root()->autoLayout();
+//    commonParent->root()->autoLayout();
     cout << "did disconnect wire" << endl;
 }
 
@@ -177,4 +178,52 @@ ALGNodeSection* ALGNode::section() {
         }
     }
     return nullptr;
+}
+
+// MARK: - Auto Layout
+
+void ALGNode::autoLayout(ALGLayout layout) {
+    cout << "will auto layout node: " << typeName << endl;
+    if (position.state == ALGPositionState::NONE) {
+        position.origin = ALGPoint::zero;
+        position.state = ALGPositionState::AUTO;
+        bool didContinue = false;
+        for (ALGWire* wire : inputWires) {
+            ALGNode* node = wire->leadingNode;
+            if (node->position.state == ALGPositionState::NONE) {
+                node->autoLayout(wire, layout);
+                didContinue = true;
+                break;
+            }
+        }
+        if (!didContinue) {
+            for (ALGWire* wire : outputWires) {
+                ALGNode* node = wire->trailingNode;
+                if (node->position.state == ALGPositionState::NONE) {
+                    node->autoLayout(wire, layout);
+                    didContinue = true;
+                    break;
+                }
+            }
+        }
+    } else if (position.state == ALGPositionState::AUTO) {
+        
+    }
+    cout << "did auto layout node: " << typeName << endl;
+}
+
+void ALGNode::autoLayout(ALGWire* wire, ALGLayout layout) {
+    cout << "will auto layout via wire node: " << typeName << endl;
+    int originX = 0;
+    for (ALGWire* inputWire : inputWires) {
+        ALGNode* node = inputWire->leadingNode;
+        if (node->position.state != ALGPositionState::NONE) {
+            originX = node->position.origin.x + node->size(layout).width + layout.spacing;
+            // ...
+        }
+    }
+    for (ALGWire* outputWire : outputWires) {
+        // ...
+    }
+    cout << "did auto layout via wire node: " << typeName << endl;
 }

@@ -13,6 +13,16 @@
 #include "Nodes/ALGNode.hpp"
 #include "Nodes/ALGItemNode.hpp"
 #include "Nodes/ALGGroupNode.hpp"
+#include "Layout/ALGLayout.hpp"
+
+using namespace std;
+
+class AutoLayoutGraph {
+    
+    ALGLayout layout;
+    
+    AutoLayoutGraph(ALGLayout layout);
+};
 
 #pragma GCC visibility pop
 #endif

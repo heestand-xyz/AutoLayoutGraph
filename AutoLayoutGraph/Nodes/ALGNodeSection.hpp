@@ -30,7 +30,9 @@ struct ALGNodeSection {
     
     vector<ALGNode*> finalNodes();
     
-    void autoLayout();
+    void autoLayout(ALGLayout layout);
+    
+    int index();
 };
 
 #endif /* ALGNodeSection_hpp */

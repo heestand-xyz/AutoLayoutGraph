@@ -45,7 +45,7 @@ public:
     
     bool isRoot();
     
-    void autoLayout();
+    void autoLayout(ALGLayout layout);
 };
 
 #endif /* ALGGroupNode_hpp */

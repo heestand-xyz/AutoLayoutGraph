@@ -8,14 +8,14 @@
 #include "ALGPosition.hpp"
 #include "../../Nodes/ALGNodeSection.hpp"
 
-ALGPoint ALGPosition::origin(ALGNodeSection* section) {
+ALGPoint ALGPosition::originInSection(ALGNodeSection* section) {
     
-    ALGPoint origin = ALGPoint::zero;
+    ALGPoint sectionOrigin = ALGPoint::zero;
     
     for (ALGNode* node : section->nodes) {
-        origin = ALGPoint(min(origin.x, node->position.point.x),
-                          min(origin.y, node->position.point.y));
+        sectionOrigin = ALGPoint(min(sectionOrigin.x, node->position.origin.x),
+                                 min(sectionOrigin.y, node->position.origin.y));
     }
     
-    return point - origin;
+    return origin - sectionOrigin;
 }

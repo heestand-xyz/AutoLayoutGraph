@@ -55,6 +55,9 @@ public:
     ALGGroupNode* root();
     
     ALGNodeSection* section();
+    
+    void autoLayout(ALGLayout layout);
+    void autoLayout(ALGWire* wire, ALGLayout layout);
 };
 
 #endif /* ALGNode_hpp */
