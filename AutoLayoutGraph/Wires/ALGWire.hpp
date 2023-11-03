@@ -8,7 +8,6 @@
 #ifndef ALGWire_hpp
 #define ALGWire_hpp
 #include "../Nodes/ALGNode.hpp"
-#include "ALGWireLength.hpp"
 
 using namespace std;
 

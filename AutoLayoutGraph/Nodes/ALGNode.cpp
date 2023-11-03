@@ -10,13 +10,14 @@
 #include "ALGNode.hpp"
 #include "ALGPoint.hpp"
 #include "ALGGroupNode.hpp"
+#include "ALGNodeSection.hpp"
 #include "../Wires/ALGWire.hpp"
 #include "../Helpers/Remove.hpp"
 #include "../Helpers/Contains.hpp"
 #include "../Helpers/Equal.hpp"
 
 ALGNode::ALGNode(string typeName)
-: origin(ALGPoint::zero), typeName(typeName)
+: typeName(typeName), position(ALGPosition())
 {
     uuid_generate(id);
 }
@@ -29,9 +30,10 @@ public:
 // MARK: - Hit Test
 
 bool ALGNode::hitTest(ALGPoint point, ALGLayout layout) {
+    ALGPoint origin = this->position.origin(section());
     ALGSize size = this->size(layout);
-    bool hitX = point.x >= 0 && point.x < size.width;
-    bool hitY = point.y >= 0 && point.y < size.height;
+    bool hitX = point.x >= origin.x && point.x < origin.x + size.width;
+    bool hitY = point.y >= origin.y && point.y < origin.y + size.height;
     return hitX && hitY;
 }
 
@@ -56,7 +58,9 @@ void ALGNode::connect(ALGWire* wire)
     cout << "will connect wire" << endl;
     wire->leadingNode->outputWires.push_back(wire);
     wire->trailingNode->inputWires.push_back(wire);
-    wire->commonParent()->updateSectionsOnDidConnect(wire);
+    ALGGroupNode* commonParent = wire->commonParent();
+    commonParent->updateSectionsOnDidConnect(wire);
+    commonParent->root()->autoLayout();
     cout << "did connect wire" << endl;
 }
 
@@ -82,7 +86,9 @@ void ALGNode::disconnect(ALGWire* wire)
     cout << "will disconnect wire" << endl;
     removeIn(wire->leadingNode->outputWires, wire);
     removeIn(wire->trailingNode->inputWires, wire);
-    wire->commonParent()->updateSectionsOnDidDisconnect(wire);
+    ALGGroupNode* commonParent = wire->commonParent();
+    commonParent->updateSectionsOnDidDisconnect(wire);
+    commonParent->root()->autoLayout();
     cout << "did disconnect wire" << endl;
 }
 
@@ -145,4 +151,30 @@ void ALGNode::removeFromParent() {
         throw ALGNodeException("Remove from parent failed, no parent found.");
     }
     parent->remove(this);
+}
+
+// MARK: - Root
+
+ALGGroupNode* ALGNode::root() {
+    if (parent == nullptr) {
+        return dynamic_cast<ALGGroupNode*>(this);
+    }
+    ALGGroupNode* currentParent = parent;
+    while (!currentParent->isRoot()) {
+        currentParent = currentParent->parent;
+    }
+    return currentParent;
+}
+
+// MARK: - Section
+
+ALGNodeSection* ALGNode::section() {
+    if (parent) {
+        for (ALGNodeSection* section : parent->sections) {
+            if (section->contains(this)) {
+                return section;
+            }
+        }
+    }
+    return nullptr;
 }

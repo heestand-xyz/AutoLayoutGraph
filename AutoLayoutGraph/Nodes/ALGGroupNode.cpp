@@ -23,6 +23,8 @@ public:
     ALGGroupNodeException(const string& message) : runtime_error(message) {}
 };
 
+// MARK: - Add
+
 void ALGGroupNode::add(ALGNode* node) {
     cout << "will add node: " << node->typeName << endl;
     if (node->parent) {
@@ -34,8 +36,11 @@ void ALGGroupNode::add(ALGNode* node) {
     ALGNodeSection* section = addSection();
     section->nodes.push_back(node);
     node->parent = this;
+    node->root()->autoLayout();
     cout << "did add node: " << node->typeName << endl;
 }
+
+// MARK: - Remove
 
 void ALGGroupNode::remove(ALGNode* node) {
     cout << "will remove node: " << node->typeName << endl;
@@ -64,9 +69,12 @@ void ALGGroupNode::remove(ALGNode* node) {
     if (!didRemove) {
         throw ALGGroupNodeException("Remove node failed, not found in group.");
     }
+    node->root()->autoLayout();
     node->parent = nullptr;
     cout << "did remove node: " << node->typeName << endl;
 }
+
+// MARK: - Nodes
 
 vector<ALGNode*> ALGGroupNode::allNodes() {
     vector<ALGNode*> allNodes = vector<ALGNode*>();
@@ -75,6 +83,8 @@ vector<ALGNode*> ALGGroupNode::allNodes() {
     }
     return allNodes;
 }
+
+// MARK: - Layout
 
 ALGSize ALGGroupNode::size(ALGLayout layout)
 {
@@ -92,37 +102,6 @@ ALGSize ALGGroupNode::size(ALGLayout layout)
         totalSize.height += sectionSize.height;
     }
     return totalSize.padding(layout.padding);
-}
-
-bool ALGGroupNode::contains(ALGNode* node) {
-    for (ALGNodeSection* section : sections) {
-        if (section->contains(node)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool ALGGroupNode::deepContains(ALGNode* node) {
-    for (ALGNodeSection* section : sections) {
-        if (section->deepContains(node)) {
-            return true;
-        }
-    }
-    return false;
-}
-
-bool ALGGroupNode::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout) {
-    ALGPoint sectionOrigin = ALGPoint(layout.padding, layout.padding);
-    for (int i = 0; i < sections.size(); i++) {
-        ALGNodeSection* section = sections[i];
-        if (section->deepHitTest(node, point - sectionOrigin, layout)) {
-            return true;
-        }
-        sectionOrigin.y += section->size(layout).height;
-        sectionOrigin.y += layout.spacing;
-    }
-    return false;
 }
 
 ALGRect ALGGroupNode::deepFrame(ALGNode* node, ALGLayout layout) {
@@ -143,6 +122,43 @@ ALGRect ALGGroupNode::deepFrame(ALGNode* node, ALGLayout layout) {
     }
     throw ALGGroupNodeException("Getting deep frame failed, node not found.");
 }
+
+// MARK: - Contains
+
+bool ALGGroupNode::contains(ALGNode* node) {
+    for (ALGNodeSection* section : sections) {
+        if (section->contains(node)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool ALGGroupNode::deepContains(ALGNode* node) {
+    for (ALGNodeSection* section : sections) {
+        if (section->deepContains(node)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// MARK: - Hit Test
+
+bool ALGGroupNode::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout) {
+    ALGPoint sectionOrigin = ALGPoint(layout.padding, layout.padding);
+    for (int i = 0; i < sections.size(); i++) {
+        ALGNodeSection* section = sections[i];
+        if (section->deepHitTest(node, point - sectionOrigin, layout)) {
+            return true;
+        }
+        sectionOrigin.y += section->size(layout).height;
+        sectionOrigin.y += layout.spacing;
+    }
+    return false;
+}
+
+// MARK: - Update Sections
 
 void ALGGroupNode::updateSectionsOnDidConnect(ALGWire* wire) {
     ALGNodeSection* leadingSection = nullptr;
@@ -181,6 +197,8 @@ void ALGGroupNode::updateSectionsOnDidDisconnect(ALGWire* wire) {
     }
 }
 
+// MARK: - Section
+
 ALGNodeSection* ALGGroupNode::addSection() {
     ALGNodeSection* section = new ALGNodeSection();
     section->group = this;
@@ -194,6 +212,17 @@ void ALGGroupNode::removeSection(ALGNodeSection* section) {
     delete section;
 }
 
+// MARK: - Is
+
 bool ALGGroupNode::isRoot() {
     return parent == nullptr;
+}
+
+// MARK: - Auto Layout
+
+void ALGGroupNode::autoLayout() {
+    
+    for (ALGNodeSection* section : sections) {
+        section->autoLayout();
+    }
 }

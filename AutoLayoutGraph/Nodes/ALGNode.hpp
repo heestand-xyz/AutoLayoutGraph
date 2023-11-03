@@ -10,10 +10,11 @@
 
 #include <uuid/uuid.h>
 #include <string>
-#include "../Layout/ALGPoint.hpp"
-#include "../Layout/ALGSize.hpp"
-#include "../Layout/ALGRect.hpp"
 #include "../Layout/ALGLayout.hpp"
+#include "../Layout/Types/ALGPoint.hpp"
+#include "../Layout/Types/ALGSize.hpp"
+#include "../Layout/Types/ALGRect.hpp"
+#include "../Layout/Position/ALGPosition.hpp"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ class ALGNode {
 public:
     uuid_t id;
     string typeName;
-    ALGPoint origin;
+    ALGPosition position;
     
     ALGGroupNode* parent = nullptr;
     
@@ -51,6 +52,9 @@ public:
     bool containsUpstream(uuid_t id);
     
     void removeFromParent();
+    ALGGroupNode* root();
+    
+    ALGNodeSection* section();
 };
 
 #endif /* ALGNode_hpp */

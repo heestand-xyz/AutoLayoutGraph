@@ -12,7 +12,7 @@
 #include "ALGNode.hpp"
 #include "../Wires/ALGWire.hpp"
 #include "../Layout/ALGLayout.hpp"
-#include "../Layout/ALGSize.hpp"
+#include "../Layout/Types/ALGSize.hpp"
 
 class ALGNodeSection;
 
@@ -44,6 +44,8 @@ public:
     void removeSection(ALGNodeSection* section);
     
     bool isRoot();
+    
+    void autoLayout();
 };
 
 #endif /* ALGGroupNode_hpp */

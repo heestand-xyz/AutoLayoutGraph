@@ -9,7 +9,7 @@
 #define ALGItemNode_hpp
 
 #include "ALGNode.hpp"
-#include "../Layout/ALGSize.hpp"
+#include "../Layout/Types/ALGSize.hpp"
 
 using namespace std;
 

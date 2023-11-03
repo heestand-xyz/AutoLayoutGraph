@@ -8,8 +8,8 @@
 #ifndef ALGLayout_hpp
 #define ALGLayout_hpp
 
-#include "ALGPoint.hpp"
-#include "ALGSize.hpp"
+#include "Types/ALGPoint.hpp"
+#include "Types/ALGSize.hpp"
 
 struct ALGLayout {
     

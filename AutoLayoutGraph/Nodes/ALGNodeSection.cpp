@@ -9,6 +9,8 @@
 #include "ALGGroupNode.hpp"
 #include "ALGRect.hpp"
 
+// MARK: - Contains
+
 bool ALGNodeSection::contains(ALGNode* node) {
     for (ALGNode* n : nodes) {
         if (n == node) {
@@ -33,6 +35,8 @@ bool ALGNodeSection::deepContains(ALGNode* node) {
     return false;
 }
 
+// MARK: - Hit Test
+
 bool ALGNodeSection::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout) {
     for (ALGNode* n : nodes) {
         if (n == node) {
@@ -48,6 +52,8 @@ bool ALGNodeSection::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout
     }
     return false;
 }
+
+// MARK: - Layout
 
 ALGPoint ALGNodeSection::getOrigin(ALGLayout layout) {
     ALGPoint origin = ALGPoint(layout.padding, layout.padding);
@@ -69,7 +75,7 @@ ALGSize ALGNodeSection::size(ALGLayout layout) {
 
     ALGRect* totalFrame = nullptr;
     for (ALGNode* node : nodes) {
-        ALGPoint origin = node->origin;
+        ALGPoint origin = node->position.origin(this);
         ALGSize size = node->size(layout);
         if (totalFrame == nullptr) {
             totalFrame = new ALGRect(origin, size);
@@ -87,6 +93,8 @@ ALGSize ALGNodeSection::size(ALGLayout layout) {
     return totalSize;
 }
 
+// MARK: - Nodes
+
 vector<ALGNode*> ALGNodeSection::finalNodes() {
     vector<ALGNode*> finalNodes = vector<ALGNode*>();
     for (ALGNode* node : nodes) {
@@ -95,4 +103,18 @@ vector<ALGNode*> ALGNodeSection::finalNodes() {
         }
     }
     return finalNodes;
+}
+
+// MARK: - Auto Layout
+
+void ALGNodeSection::autoLayout() {
+    
+    for (ALGNode* node : nodes) {
+        ALGGroupNode* groupNode = dynamic_cast<ALGGroupNode*>(node);
+        if (groupNode) {
+            groupNode->autoLayout();
+        }
+    }
+    
+    // ...
 }

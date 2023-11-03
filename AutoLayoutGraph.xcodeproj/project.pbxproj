@@ -10,7 +10,7 @@
 		D31FF74F2AF206EC0038626C /* Remove.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D31FF74E2AF206EC0038626C /* Remove.hpp */; };
 		D31FF7532AF20A750038626C /* ALGWire.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D31FF7512AF20A750038626C /* ALGWire.cpp */; };
 		D31FF7542AF20A750038626C /* ALGWire.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D31FF7522AF20A750038626C /* ALGWire.hpp */; };
-		D31FF7582AF20AFF0038626C /* ALGWireLength.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D31FF7562AF20AFF0038626C /* ALGWireLength.hpp */; };
+		D31FF7582AF20AFF0038626C /* ALGPositionState.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D31FF7562AF20AFF0038626C /* ALGPositionState.hpp */; };
 		D31FF75C2AF20D680038626C /* Contains.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D31FF75A2AF20D680038626C /* Contains.hpp */; };
 		D31FF7602AF20E8B0038626C /* Equal.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D31FF75E2AF20E8B0038626C /* Equal.hpp */; };
 		D3635E872AF1243B0054EDB1 /* ALGSize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3635E852AF1243B0054EDB1 /* ALGSize.cpp */; };
@@ -32,13 +32,15 @@
 		D3C3A4BC2AF0D47D0008C8FB /* ALGItemNode.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3C3A4BA2AF0D47D0008C8FB /* ALGItemNode.hpp */; };
 		D3EBABB22AF4C8CD002DDD05 /* Append.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3EBABB02AF4C8CD002DDD05 /* Append.hpp */; };
 		D3EBABB62AF4D0AA002DDD05 /* First.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3EBABB42AF4D0AA002DDD05 /* First.hpp */; };
+		D3EBABBA2AF50167002DDD05 /* ALGPosition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3EBABB82AF50167002DDD05 /* ALGPosition.cpp */; };
+		D3EBABBB2AF50167002DDD05 /* ALGPosition.hpp in Headers */ = {isa = PBXBuildFile; fileRef = D3EBABB92AF50167002DDD05 /* ALGPosition.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D31FF74E2AF206EC0038626C /* Remove.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Remove.hpp; sourceTree = "<group>"; };
 		D31FF7512AF20A750038626C /* ALGWire.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGWire.cpp; sourceTree = "<group>"; };
 		D31FF7522AF20A750038626C /* ALGWire.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGWire.hpp; sourceTree = "<group>"; };
-		D31FF7562AF20AFF0038626C /* ALGWireLength.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGWireLength.hpp; sourceTree = "<group>"; };
+		D31FF7562AF20AFF0038626C /* ALGPositionState.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGPositionState.hpp; sourceTree = "<group>"; };
 		D31FF75A2AF20D680038626C /* Contains.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Contains.hpp; sourceTree = "<group>"; };
 		D31FF75E2AF20E8B0038626C /* Equal.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Equal.hpp; sourceTree = "<group>"; };
 		D3635E852AF1243B0054EDB1 /* ALGSize.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGSize.cpp; sourceTree = "<group>"; };
@@ -61,6 +63,8 @@
 		D3C3A4BA2AF0D47D0008C8FB /* ALGItemNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGItemNode.hpp; sourceTree = "<group>"; };
 		D3EBABB02AF4C8CD002DDD05 /* Append.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Append.hpp; sourceTree = "<group>"; };
 		D3EBABB42AF4D0AA002DDD05 /* First.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = First.hpp; sourceTree = "<group>"; };
+		D3EBABB82AF50167002DDD05 /* ALGPosition.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGPosition.cpp; sourceTree = "<group>"; };
+		D3EBABB92AF50167002DDD05 /* ALGPosition.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGPosition.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +95,6 @@
 			children = (
 				D31FF7512AF20A750038626C /* ALGWire.cpp */,
 				D31FF7522AF20A750038626C /* ALGWire.hpp */,
-				D31FF7562AF20AFF0038626C /* ALGWireLength.hpp */,
 			);
 			path = Wires;
 			sourceTree = "<group>";
@@ -142,16 +145,35 @@
 		D3C3A4AC2AF0C75F0008C8FB /* Layout */ = {
 			isa = PBXGroup;
 			children = (
+				D3635E892AF127C20054EDB1 /* ALGLayout.cpp */,
+				D3635E8A2AF127C20054EDB1 /* ALGLayout.hpp */,
+				D3EBABBC2AF501B6002DDD05 /* Position */,
+				D3EBABBD2AF5025A002DDD05 /* Types */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		D3EBABBC2AF501B6002DDD05 /* Position */ = {
+			isa = PBXGroup;
+			children = (
+				D3EBABB82AF50167002DDD05 /* ALGPosition.cpp */,
+				D3EBABB92AF50167002DDD05 /* ALGPosition.hpp */,
+				D31FF7562AF20AFF0038626C /* ALGPositionState.hpp */,
+			);
+			path = Position;
+			sourceTree = "<group>";
+		};
+		D3EBABBD2AF5025A002DDD05 /* Types */ = {
+			isa = PBXGroup;
+			children = (
 				D3C3A4AD2AF0C7760008C8FB /* ALGPoint.cpp */,
 				D3C3A4AE2AF0C7760008C8FB /* ALGPoint.hpp */,
 				D3635E852AF1243B0054EDB1 /* ALGSize.cpp */,
 				D3635E862AF1243B0054EDB1 /* ALGSize.hpp */,
-				D3635E892AF127C20054EDB1 /* ALGLayout.cpp */,
-				D3635E8A2AF127C20054EDB1 /* ALGLayout.hpp */,
 				D3635E8D2AF12D930054EDB1 /* ALGRect.cpp */,
 				D3635E8E2AF12D930054EDB1 /* ALGRect.hpp */,
 			);
-			path = Layout;
+			path = Types;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,7 +183,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D31FF7582AF20AFF0038626C /* ALGWireLength.hpp in Headers */,
+				D31FF7582AF20AFF0038626C /* ALGPositionState.hpp in Headers */,
 				D31FF7542AF20A750038626C /* ALGWire.hpp in Headers */,
 				D31FF74F2AF206EC0038626C /* Remove.hpp in Headers */,
 				D3635E8C2AF127C20054EDB1 /* ALGLayout.hpp in Headers */,
@@ -169,6 +191,7 @@
 				D3C3A4B02AF0C7760008C8FB /* ALGPoint.hpp in Headers */,
 				D3C3A4B82AF0D3280008C8FB /* ALGNodeSection.hpp in Headers */,
 				D3EBABB62AF4D0AA002DDD05 /* First.hpp in Headers */,
+				D3EBABBB2AF50167002DDD05 /* ALGPosition.hpp in Headers */,
 				D3C3A4992AF0C51A0008C8FB /* AutoLayoutGraph.hpp in Headers */,
 				D3635E902AF12D930054EDB1 /* ALGRect.hpp in Headers */,
 				D31FF7602AF20E8B0038626C /* Equal.hpp in Headers */,
@@ -246,6 +269,7 @@
 				D3C3A4BB2AF0D47D0008C8FB /* ALGItemNode.cpp in Sources */,
 				D3C3A4B72AF0D3280008C8FB /* ALGNodeSection.cpp in Sources */,
 				D3635E872AF1243B0054EDB1 /* ALGSize.cpp in Sources */,
+				D3EBABBA2AF50167002DDD05 /* ALGPosition.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -29,6 +29,8 @@ struct ALGNodeSection {
     ALGSize size(ALGLayout layout);
     
     vector<ALGNode*> finalNodes();
+    
+    void autoLayout();
 };
 
 #endif /* ALGNodeSection_hpp */
