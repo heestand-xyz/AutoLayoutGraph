@@ -60,16 +60,17 @@ bool ALGNodeSection::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout
 
 // MARK: - Layout
 
-ALGPoint ALGNodeSection::getOrigin(ALGLayout layout) {
-    ALGPoint origin = ALGPoint(layout.padding, layout.padding);
+ALGPoint ALGNodeSection::origin(ALGLayout layout) {
+    double y = layout.padding;
     for (ALGNodeSection* section : group->sections) {
         if (section == this) {
-            
+            break;
         }
-        origin.y += section->size(layout).height;
-        origin.y += layout.spacing;
+        y += section->size(layout).height;
+        y += layout.spacing;
     }
-    return origin;
+    double x = group->size(layout).width / 2 - size(layout).width / 2;
+    return ALGPoint(x, y);
 }
 
 ALGSize ALGNodeSection::size(ALGLayout layout) {
@@ -98,6 +99,10 @@ ALGSize ALGNodeSection::size(ALGLayout layout) {
     return totalSize;
 }
 
+ALGRect ALGNodeSection::frame(ALGLayout layout) {
+    return ALGRect(origin(layout), size(layout));
+}
+
 // MARK: - Nodes
 
 vector<ALGNode*> ALGNodeSection::finalNodes() {
@@ -119,6 +124,9 @@ void ALGNodeSection::autoLayout(ALGLayout layout) {
         if (groupNode) {
             groupNode->autoLayout(layout);
         }
+    }
+    for (ALGNode* node : nodes) {
+        node->position.state = ALGPositionState::NONE;
     }
     bool isFirst = true;
     for (ALGNode* finalNode : finalNodes()) {

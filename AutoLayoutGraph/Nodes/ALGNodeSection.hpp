@@ -25,8 +25,9 @@ struct ALGNodeSection {
     bool deepContains(ALGNode* node);
     bool deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout);
     
-    ALGPoint getOrigin(ALGLayout layout);
+    ALGPoint origin(ALGLayout layout);
     ALGSize size(ALGLayout layout);
+    ALGRect frame(ALGLayout layout);
     
     vector<ALGNode*> finalNodes();
     

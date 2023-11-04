@@ -58,12 +58,12 @@ ALGRect ALGGroupNode::deepFrame(ALGNode* node, ALGLayout layout) {
         if (section->deepContains(node)) {
             for (ALGNode* n : section->nodes) {
                 if (n == node) {
-                    return ALGRect(section->getOrigin(layout), node->size(layout));
+                    return ALGRect(section->origin(layout), node->size(layout));
                 }
                 ALGGroupNode* groupNode = dynamic_cast<ALGGroupNode*>(n);
                 if (groupNode && groupNode->deepContains(node)) {
                     ALGRect frame = groupNode->deepFrame(node, layout);
-                    return ALGRect(section->getOrigin(layout) + frame.origin, node->size(layout));
+                    return ALGRect(section->origin(layout) + frame.origin, node->size(layout));
                 }
             }
         }
@@ -94,14 +94,10 @@ bool ALGGroupNode::deepContains(ALGNode* node) {
 // MARK: - Hit Test
 
 bool ALGGroupNode::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout) {
-    ALGPoint sectionOrigin = ALGPoint(layout.padding, layout.padding);
-    for (int i = 0; i < sections.size(); i++) {
-        ALGNodeSection* section = sections[i];
-        if (section->deepHitTest(node, point - sectionOrigin, layout)) {
+    for (ALGNodeSection* section : sections) {
+        if (section->deepHitTest(node, point - section->origin(layout), layout)) {
             return true;
         }
-        sectionOrigin.y += section->size(layout).height;
-        sectionOrigin.y += layout.spacing;
     }
     return false;
 }

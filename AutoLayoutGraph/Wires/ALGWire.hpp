@@ -32,6 +32,8 @@ public:
     static vector<ALGNode*> nodesWith(ALGWire* wire, ALGNode* checkNode, vector<ALGNode*> checkedNodes);
     
     void autoLayout(ALGLayout layout);
+    void autoRearrange(ALGLayout layout);
+    ALGPoint autoOffset(ALGLayout layout);
     
     friend ostream& operator<<(ostream& os, const ALGWire* wire);
 };

@@ -111,18 +111,53 @@ vector<ALGNode*> ALGWire::nodesWith(ALGWire* wire, ALGNode* checkNode, vector<AL
 
 void ALGWire::autoLayout(ALGLayout layout) {
     cout << "will auto layout: " << this << endl;
-//    int originX = 0;
-//    for (ALGWire* inputWire : inputWires) {
-//        ALGNode* node = inputWire->leadingNode;
-//        if (node->position.state != ALGPositionState::NONE) {
-//            originX = node->position.origin.x + node->size(layout).width + layout.spacing;
-//            // ...
-//        }
-//    }
-//    for (ALGWire* outputWire : outputWires) {
-//        // ...
-//    }
+    if (leadingNode->position.state == ALGPositionState::FINAL) {
+        autoRearrange(layout);
+        return;
+    }
+    ALGPoint offset = autoOffset(layout);
+    ALGPoint origin = trailingNode->position.origin + offset;
+    leadingNode->position.origin = origin;
+    if (trailingNode->position.state == ALGPositionState::FINAL) {
+        leadingNode->position.state = ALGPositionState::FINAL;
+    } else {
+        leadingNode->position.state = ALGPositionState::AUTO;
+    }
+    for (ALGWire* inputWire : leadingNode->inputWires) {
+        inputWire->autoLayout(layout);
+    }
     cout << "did auto layout: " << this << endl;
+}
+
+void ALGWire::autoRearrange(ALGLayout layout) {
+    cout << "will auto rearrange: " << this << endl;
+    ALGPoint offset = autoOffset(layout);
+    trailingNode->position.origin = leadingNode->position.origin - offset;
+    trailingNode->position.state = ALGPositionState::FINAL;
+    for (ALGWire* outputWire : trailingNode->outputWires) {
+        outputWire->autoRearrange(layout);
+    }
+    cout << "did auto rearrange: " << this << endl;
+}
+
+ALGPoint ALGWire::autoOffset(ALGLayout layout) {
+    double offsetX = -layout.spacing - leadingNode->size(layout).width;
+    vector<ALGWire*> parallelWires = trailingNode->inputWires;
+    auto parallelCount = parallelWires.size();
+    double y = 0.0;
+    double height = 0.0;
+    for (int i = 0; i < parallelCount; i++) {
+        ALGWire* inputWire = parallelWires[i];
+        if (inputWire == this) {
+            y = height;
+        }
+        height += inputWire->leadingNode->size(layout).height;
+        if (i < parallelCount - 1) {
+            height += layout.spacing;
+        }
+    }
+    double offsetY = y - height / 2 + trailingNode->size(layout).height / 2;
+    return ALGPoint(offsetX, offsetY);
 }
 
 // MARK: - Print
