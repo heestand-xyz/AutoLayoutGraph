@@ -37,6 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D311F24C2AF5C9E400D64787 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D31FF74E2AF206EC0038626C /* Remove.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Remove.hpp; sourceTree = "<group>"; };
 		D31FF7512AF20A750038626C /* ALGWire.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ALGWire.cpp; sourceTree = "<group>"; };
 		D31FF7522AF20A750038626C /* ALGWire.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ALGWire.hpp; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		D3C3A48C2AF0C51A0008C8FB = {
 			isa = PBXGroup;
 			children = (
+				D311F24C2AF5C9E400D64787 /* README.md */,
 				D3C3A4972AF0C51A0008C8FB /* AutoLayoutGraph */,
 				D3C3A4962AF0C51A0008C8FB /* Products */,
 			);
