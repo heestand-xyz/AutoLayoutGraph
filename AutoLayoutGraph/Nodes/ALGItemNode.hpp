@@ -21,6 +21,8 @@ public:
     ALGItemNode(string typeName, ALGSize size);
     
     ALGSize size(ALGLayout layout);
+    
+    friend ostream& operator<<(ostream& os, const ALGItemNode* itemNode);
 };
 
 #endif /* ALGItemNode_hpp */

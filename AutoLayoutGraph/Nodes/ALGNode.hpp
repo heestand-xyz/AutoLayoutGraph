@@ -44,8 +44,7 @@ public:
     
     ALGNodeSection* section();
     
-    void autoLayout(ALGLayout layout);
-    void autoLayout(ALGWire* wire, ALGLayout layout);
+    friend ostream& operator<<(ostream& os, const ALGNode* node);
 };
 
 #endif /* ALGNode_hpp */

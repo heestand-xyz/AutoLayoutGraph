@@ -88,50 +88,9 @@ ALGNodeSection* ALGNode::section() {
     return nullptr;
 }
 
-// MARK: - Auto Layout
+// MARK: - Print
 
-void ALGNode::autoLayout(ALGLayout layout) {
-    cout << "will auto layout node: " << typeName << endl;
-    if (position.state == ALGPositionState::NONE) {
-        position.origin = ALGPoint::zero;
-        position.state = ALGPositionState::AUTO;
-        bool didContinue = false;
-        for (ALGWire* wire : inputWires) {
-            ALGNode* node = wire->leadingNode;
-            if (node->position.state == ALGPositionState::NONE) {
-                node->autoLayout(wire, layout);
-                didContinue = true;
-                break;
-            }
-        }
-        if (!didContinue) {
-            for (ALGWire* wire : outputWires) {
-                ALGNode* node = wire->trailingNode;
-                if (node->position.state == ALGPositionState::NONE) {
-                    node->autoLayout(wire, layout);
-                    didContinue = true;
-                    break;
-                }
-            }
-        }
-    } else if (position.state == ALGPositionState::AUTO) {
-        
-    }
-    cout << "did auto layout node: " << typeName << endl;
-}
-
-void ALGNode::autoLayout(ALGWire* wire, ALGLayout layout) {
-    cout << "will auto layout via wire node: " << typeName << endl;
-    int originX = 0;
-    for (ALGWire* inputWire : inputWires) {
-        ALGNode* node = inputWire->leadingNode;
-        if (node->position.state != ALGPositionState::NONE) {
-            originX = node->position.origin.x + node->size(layout).width + layout.spacing;
-            // ...
-        }
-    }
-    for (ALGWire* outputWire : outputWires) {
-        // ...
-    }
-    cout << "did auto layout via wire node: " << typeName << endl;
+ostream& operator<<(ostream& os, const ALGNode* node) {
+    os << "node('" << node->typeName << "')";
+    return os;
 }

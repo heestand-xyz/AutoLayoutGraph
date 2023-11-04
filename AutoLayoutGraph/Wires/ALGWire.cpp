@@ -106,3 +106,28 @@ vector<ALGNode*> ALGWire::nodesWith(ALGWire* wire, ALGNode* checkNode, vector<AL
     }
     return checkedNodes;
 }
+
+// MARK: - Auto Layout
+
+void ALGWire::autoLayout(ALGLayout layout) {
+    cout << "will auto layout: " << this << endl;
+//    int originX = 0;
+//    for (ALGWire* inputWire : inputWires) {
+//        ALGNode* node = inputWire->leadingNode;
+//        if (node->position.state != ALGPositionState::NONE) {
+//            originX = node->position.origin.x + node->size(layout).width + layout.spacing;
+//            // ...
+//        }
+//    }
+//    for (ALGWire* outputWire : outputWires) {
+//        // ...
+//    }
+    cout << "did auto layout: " << this << endl;
+}
+
+// MARK: - Print
+
+ostream& operator<<(ostream& os, const ALGWire* wire) {
+    os << "wire(from: " << wire->leadingNode << " to: " << wire->trailingNode << ")";
+    return os;
+}

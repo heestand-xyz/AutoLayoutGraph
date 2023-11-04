@@ -11,7 +11,7 @@
 enum class ALGPositionState : int {
     NONE,
     AUTO,
-    DONE
+    FINAL
 };
 
 #endif /* ALGWireLength_hpp */

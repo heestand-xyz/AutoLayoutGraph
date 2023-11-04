@@ -18,3 +18,11 @@ ALGSize ALGItemNode::size(ALGLayout layout)
 {
     return fixedSize;
 }
+
+// MARK: - Print
+
+ostream& operator<<(ostream& os, const ALGItemNode* itemNode) {
+    os << "itemNode('" << itemNode->typeName << "')";
+    return os;
+}
+

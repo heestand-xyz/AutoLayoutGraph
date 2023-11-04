@@ -24,7 +24,7 @@ public:
 // MARK: - Life Cycle
 
 void AutoLayoutGraph::addToParent(ALGGroupNode* parentNode, ALGNode* node) {
-    cout << "will add node: " << node->typeName << " to parent: " << parentNode->typeName << endl;
+    cout << "will add: " << node << " to parent: " << parentNode << endl;
     if (node->parent) {
         throw AutoLayoutGraphException("Add node failed, node already has a parent.");
     }
@@ -35,7 +35,7 @@ void AutoLayoutGraph::addToParent(ALGGroupNode* parentNode, ALGNode* node) {
     section->nodes.push_back(node);
     node->parent = parentNode;
     node->root()->autoLayout(layout);
-    cout << "did add node: " << node->typeName << " to parent: " << parentNode->typeName << endl;
+    cout << "did add: " << node << " to parent: " << parentNode << endl;
 }
 
 void AutoLayoutGraph::moveToNewParent(ALGGroupNode* parentNode, ALGNode* node) {
@@ -43,7 +43,7 @@ void AutoLayoutGraph::moveToNewParent(ALGGroupNode* parentNode, ALGNode* node) {
 }
 
 void AutoLayoutGraph::removeFromParent(ALGNode* node) {
-    cout << "will remove node: " << node->typeName << " from parent: " << node->parent->typeName << endl;
+    cout << "will remove: " << node << " from parent: " << node->parent << endl;
     if (node->parent == nullptr) {
         throw AutoLayoutGraphException("Remove node failed, node parent not found.");
     }
@@ -72,14 +72,14 @@ void AutoLayoutGraph::removeFromParent(ALGNode* node) {
         throw AutoLayoutGraphException("Remove node failed, not found in group.");
     }
     node->root()->autoLayout(layout);
-    cout << "did remove node: " << node->typeName << " from parent: " << node->parent->typeName << endl;
+    cout << "did remove: " << node << " from parent: " << node->parent << endl;
     node->parent = nullptr;
 }
 
 // MARK: - Connection
 
 void AutoLayoutGraph::connectWire(ALGNode* leadingNode, ALGNode* trailingNode) {
-    cout << "will connect wire from leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
+    cout << "will connect wire from leading: " << leadingNode << " to trailing: " << trailingNode << endl;
     if (leadingNode->root() != trailingNode->root()) {
         throw AutoLayoutGraphException("Connection failed, no common root group node.");
     }
@@ -95,11 +95,11 @@ void AutoLayoutGraph::connectWire(ALGNode* leadingNode, ALGNode* trailingNode) {
     ALGGroupNode* commonParent = wire->commonParent();
     commonParent->updateSectionsOnDidConnect(wire);
     commonParent->root()->autoLayout(layout);
-    cout << "did connect wire from leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
+    cout << "did connect wire from leading: " << leadingNode << " to trailing: " << trailingNode << endl;
 }
 
 void AutoLayoutGraph::disconnectWire(ALGNode* leadingNode, ALGNode* trailingNode) {
-    cout << "will disconnect wire from leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
+    cout << "will disconnect wire from leading: " << leadingNode << " to trailing: " << trailingNode << endl;
     if (!AutoLayoutGraph::isConnected(leadingNode, trailingNode)) {
         throw AutoLayoutGraphException("Disconnect failed, already disconnected.");
     }
@@ -109,7 +109,7 @@ void AutoLayoutGraph::disconnectWire(ALGNode* leadingNode, ALGNode* trailingNode
     }
     disconnectWire(wire);
     delete wire;
-    cout << "did disconnect wire from leading node: " << leadingNode->typeName << " to trailing node: " << trailingNode->typeName << endl;
+    cout << "did disconnect wire from leading: " << leadingNode << " to trailing: " << trailingNode << endl;
 }
 
 void AutoLayoutGraph::disconnectWire(ALGWire* wire) {

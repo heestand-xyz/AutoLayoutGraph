@@ -169,9 +169,16 @@ bool ALGGroupNode::isRoot() {
 // MARK: - Auto Layout
 
 void ALGGroupNode::autoLayout(ALGLayout layout) {
-    cout << "will auto layout group node: " << typeName << endl;
+    cout << "will auto layout: " << this << endl;
     for (ALGNodeSection* section : sections) {
         section->autoLayout(layout);
     }
-    cout << "did auto layout group node: " << typeName << endl;
+    cout << "did auto layout: " << this << endl;
+}
+
+// MARK: - Print
+
+ostream& operator<<(ostream& os, const ALGGroupNode* groupNode) {
+    os << "groupNode('" << groupNode->typeName << "')";
+    return os;
 }

@@ -113,21 +113,32 @@ vector<ALGNode*> ALGNodeSection::finalNodes() {
 // MARK: - Auto Layout
 
 void ALGNodeSection::autoLayout(ALGLayout layout) {
-    cout << "will auto layout node section: " << group->typeName << ":" << index() << endl;
+    cout << "will auto layout: " << this << endl;
     for (ALGNode* node : nodes) {
         ALGGroupNode* groupNode = dynamic_cast<ALGGroupNode*>(node);
         if (groupNode) {
             groupNode->autoLayout(layout);
         }
     }
-    ALGNode* firstNode = nodes[0];
-    firstNode->autoLayout(layout);
-    cout << "did auto layout node section: " << group->typeName << ":" << index() << endl;
+    bool isFirst = true;
+    for (ALGNode* finalNode : finalNodes()) {
+        finalNode->position.origin = ALGPoint::zero;
+        if (isFirst) {
+            finalNode->position.state = ALGPositionState::FINAL;
+            isFirst = false;
+        } else {
+            finalNode->position.state = ALGPositionState::AUTO;
+        }
+        for (ALGWire* inputWire : finalNode->inputWires) {
+            inputWire->autoLayout(layout);
+        }
+    }
+    cout << "did auto layout: " << this << endl;
 }
 
 // MARK: - Index
 
-int ALGNodeSection::index() {
+int ALGNodeSection::index() const {
     
     for (int i = 0; i < group->sections.size(); i++) {
         ALGNodeSection* section = group->sections[i];
@@ -137,4 +148,11 @@ int ALGNodeSection::index() {
     }
     
     throw ALGNodeSectionException("Section index not found.");
+}
+
+// MARK: - Print
+
+ostream& operator<<(ostream& os, const ALGNodeSection* section) {
+    os << "section(" << section->index() << ")";
+    return os;
 }

@@ -30,6 +30,10 @@ public:
     vector<ALGNode*> leadingNodes();
     vector<ALGNode*> trailingNodes();
     static vector<ALGNode*> nodesWith(ALGWire* wire, ALGNode* checkNode, vector<ALGNode*> checkedNodes);
+    
+    void autoLayout(ALGLayout layout);
+    
+    friend ostream& operator<<(ostream& os, const ALGWire* wire);
 };
 
 #endif /* ALGWire_hpp */

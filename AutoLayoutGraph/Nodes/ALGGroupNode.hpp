@@ -46,6 +46,8 @@ public:
     bool isRoot();
     
     void autoLayout(ALGLayout layout);
+    
+    friend ostream& operator<<(ostream& os, const ALGGroupNode* groupNode);
 };
 
 #endif /* ALGGroupNode_hpp */

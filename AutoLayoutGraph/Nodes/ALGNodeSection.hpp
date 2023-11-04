@@ -32,7 +32,9 @@ struct ALGNodeSection {
     
     void autoLayout(ALGLayout layout);
     
-    int index();
+    int index() const;
+    
+    friend ostream& operator<<(ostream& os, const ALGNodeSection* section);
 };
 
 #endif /* ALGNodeSection_hpp */
