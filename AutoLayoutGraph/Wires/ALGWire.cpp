@@ -129,7 +129,7 @@ void ALGWire::autoLayout(ALGLayout layout) {
         autoRearrange(layout);
         return;
     }
-    ALGPoint offset = autoOffset(layout);
+    ALGPoint offset = ALGPoint(-offsetX(layout), -offsetY(layout)); //offsetForLeadingNode(layout);
     ALGPoint origin = trailingNode->position.origin + offset;
     if (trailingNode->position.state == ALGPositionState::FINAL) {
         leadingNode->position.finalizeOrigin(origin);
@@ -146,8 +146,8 @@ void ALGWire::autoLayout(ALGLayout layout) {
 
 void ALGWire::autoRearrange(ALGLayout layout) {
     cout << "will auto rearrange: " << this << endl;
-    ALGPoint offset = autoOffset(layout);
-    ALGPoint origin = leadingNode->position.origin - offset;
+    ALGPoint offset = ALGPoint(offsetX(layout), offsetY(layout)); //offsetForTrailingNode(layout);
+    ALGPoint origin = leadingNode->position.origin + offset;
     trailingNode->position.finalizeOrigin(origin);
     cout << "auto rearrange final position of: " << trailingNode << " to: " << origin << endl;
     for (ALGWire* outputWire : trailingNode->outputWiresWithCommonParent()) {
@@ -156,25 +156,81 @@ void ALGWire::autoRearrange(ALGLayout layout) {
     cout << "did auto rearrange: " << this << endl;
 }
 
-ALGPoint ALGWire::autoOffset(ALGLayout layout) {
-    double offsetX = -layout.spacing - leadingNode->size(layout).width;
-    vector<ALGWire*> parallelWires = trailingNode->inputWiresWithCommonParent();
-    auto parallelCount = parallelWires.size();
-    double y = 0.0;
-    double height = 0.0;
-    for (int i = 0; i < parallelCount; i++) {
-        ALGWire* inputWire = parallelWires[i];
-        if (inputWire == this) {
-            y = height;
+double ALGWire::offsetX(ALGLayout layout) {
+    return leadingNode->size(layout).width + layout.spacing;
+}
+
+double ALGWire::offsetY(ALGLayout layout) {
+    vector<ALGWire*> leadingParallelWires = trailingNode->inputWiresWithCommonParent();
+    vector<ALGWire*> trailingParallelWires = leadingNode->outputWiresWithCommonParent();
+    double leadingY = 0.0;
+    double trailingY = 0.0;
+    double leadingHeight = 0.0;
+    double trailingHeight = 0.0;
+    for (int i = 0; i < leadingParallelWires.size(); i++) {
+        ALGWire* leadingParallelWire = leadingParallelWires[i];
+        if (leadingParallelWire == this) {
+            leadingY = leadingHeight;
         }
-        height += inputWire->leadingNode->size(layout).height;
-        if (i < parallelCount - 1) {
-            height += layout.spacing;
+        leadingHeight += leadingParallelWire->leadingNode->size(layout).height;
+        if (i < leadingParallelWires.size() - 1) {
+            leadingHeight += layout.spacing;
         }
     }
-    double offsetY = y - height / 2 + trailingNode->size(layout).height / 2;
-    return ALGPoint(offsetX, offsetY);
+    for (int i = 0; i < trailingParallelWires.size(); i++) {
+        ALGWire* trailingParallelWire = trailingParallelWires[i];
+        if (trailingParallelWire == this) {
+            trailingY = trailingHeight;
+        }
+        trailingHeight += trailingParallelWire->trailingNode->size(layout).height;
+        if (i < trailingParallelWires.size() - 1) {
+            trailingHeight += layout.spacing;
+        }
+    }
+    double leadingOffsetY = leadingY - leadingHeight / 2 + trailingNode->size(layout).height / 2;
+    double trailingOffsetY = trailingY - trailingHeight / 2 + leadingNode->size(layout).height / 2;
+    return leadingOffsetY + trailingOffsetY;
 }
+
+//ALGPoint ALGWire::offsetForLeadingNode(ALGLayout layout) {
+//    double offsetX = -layout.spacing - leadingNode->size(layout).width;
+//    vector<ALGWire*> parallelWires = trailingNode->inputWiresWithCommonParent();
+//    auto parallelCount = parallelWires.size();
+//    double y = 0.0;
+//    double height = 0.0;
+//    for (int i = 0; i < parallelCount; i++) {
+//        ALGWire* parallelWire = parallelWires[i];
+//        if (parallelWire == this) {
+//            y = height;
+//        }
+//        height += parallelWire->leadingNode->size(layout).height;
+//        if (i < parallelCount - 1) {
+//            height += layout.spacing;
+//        }
+//    }
+//    double offsetY = y - height / 2 + trailingNode->size(layout).height / 2;
+//    return ALGPoint(offsetX, offsetY);
+//}
+
+//ALGPoint ALGWire::offsetForTrailingNode(ALGLayout layout) {
+//    double offsetX = leadingNode->size(layout).width + layout.spacing;
+//    vector<ALGWire*> parallelWires = leadingNode->outputWiresWithCommonParent();
+//    auto parallelCount = parallelWires.size();
+//    double y = 0.0;
+//    double height = 0.0;
+//    for (int i = 0; i < parallelCount; i++) {
+//        ALGWire* parallelWire = parallelWires[i];
+//        if (parallelWire == this) {
+//            y = height;
+//        }
+//        height += parallelWire->trailingNode->size(layout).height;
+//        if (i < parallelCount - 1) {
+//            height += layout.spacing;
+//        }
+//    }
+//    double offsetY = y - height / 2 + leadingNode->size(layout).height / 2;
+//    return ALGPoint(offsetX, offsetY);
+//}
 
 // MARK: - Print
 

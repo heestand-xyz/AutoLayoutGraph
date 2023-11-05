@@ -33,7 +33,10 @@ public:
     
     void autoLayout(ALGLayout layout);
     void autoRearrange(ALGLayout layout);
-    ALGPoint autoOffset(ALGLayout layout);
+    double offsetX(ALGLayout layout);
+    double offsetY(ALGLayout layout);
+//    ALGPoint offsetForLeadingNode(ALGLayout layout);
+//    ALGPoint offsetForTrailingNode(ALGLayout layout);
     
     friend ostream& operator<<(ostream& os, const ALGWire* wire);
 };
