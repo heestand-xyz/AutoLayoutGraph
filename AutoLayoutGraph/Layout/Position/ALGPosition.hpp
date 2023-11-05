@@ -20,6 +20,10 @@ struct ALGPosition {
     ALGPositionState state = ALGPositionState::NONE;
         
     ALGPoint originInSection(ALGNodeSection* section);
+    
+    void reset();
+    void temporaryOrigin(ALGPoint origin);
+    void finalizeOrigin(ALGPoint origin);
 };
 
 #endif /* ALGPosition_hpp */

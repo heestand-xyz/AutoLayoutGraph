@@ -13,6 +13,7 @@
 #include "Nodes/ALGNode.hpp"
 #include "Nodes/ALGItemNode.hpp"
 #include "Nodes/ALGGroupNode.hpp"
+#include "Nodes/ALGNodeSection.hpp"
 #include "Layout/ALGLayout.hpp"
 
 using namespace std;

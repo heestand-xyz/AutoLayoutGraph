@@ -27,9 +27,9 @@ public:
     bool isIndirectlyConnected();
     static bool isIndirectlyConnectedWith(ALGWire* wire, ALGNode* checkNode, vector<ALGNode*> checkedNodes);
     
-    vector<ALGNode*> leadingNodes();
-    vector<ALGNode*> trailingNodes();
-    static vector<ALGNode*> nodesWith(ALGWire* wire, ALGNode* checkNode, vector<ALGNode*> checkedNodes);
+    vector<ALGNode*> leadingNodesWithCommonParent();
+    vector<ALGNode*> trailingNodesWithCommonParent();
+    static vector<ALGNode*> nodesWithCommonParent(ALGWire* wire, ALGNode* checkNode, vector<ALGNode*> checkedNodes);
     
     void autoLayout(ALGLayout layout);
     void autoRearrange(ALGLayout layout);

@@ -8,6 +8,7 @@
 #include "ALGNodeSection.hpp"
 #include "ALGGroupNode.hpp"
 #include "ALGRect.hpp"
+#include "../Helpers/Append.hpp"
 
 class ALGNodeSectionException : public runtime_error {
 public:
@@ -108,17 +109,29 @@ ALGRect ALGNodeSection::frame(ALGLayout layout) {
 vector<ALGNode*> ALGNodeSection::finalNodes() {
     vector<ALGNode*> finalNodes = vector<ALGNode*>();
     for (ALGNode* node : nodes) {
-        if (node->outputWires.empty()) {
+        if (node->outputWiresWithCommonParent().empty()) {
             finalNodes.push_back(node);
         }
     }
     return finalNodes;
 }
 
+vector<ALGNode*> ALGNodeSection::deepNodes() {
+    vector<ALGNode*> deepNodes = vector<ALGNode*>();
+    for (ALGNode* node : nodes) {
+        deepNodes.push_back(node);
+        ALGGroupNode* groupNode = dynamic_cast<ALGGroupNode*>(node);
+        if (groupNode) {
+            deepNodes += groupNode->deepNodes();
+        }
+    }
+    return deepNodes;
+}
+
 // MARK: - Auto Layout
 
 void ALGNodeSection::autoLayout(ALGLayout layout) {
-    cout << "will auto layout: " << this << endl;
+    cout << "will auto layout: " << this << " in group: " << group << endl;
     for (ALGNode* node : nodes) {
         ALGGroupNode* groupNode = dynamic_cast<ALGGroupNode*>(node);
         if (groupNode) {
@@ -126,22 +139,23 @@ void ALGNodeSection::autoLayout(ALGLayout layout) {
         }
     }
     for (ALGNode* node : nodes) {
-        node->position.state = ALGPositionState::NONE;
+        node->position.reset();
     }
     bool isFirst = true;
     for (ALGNode* finalNode : finalNodes()) {
-        finalNode->position.origin = ALGPoint::zero;
         if (isFirst) {
-            finalNode->position.state = ALGPositionState::FINAL;
+            finalNode->position.finalizeOrigin(ALGPoint::zero);
+            cout << "auto layout final position of: " << finalNode << " to: " << ALGPoint::zero << endl;
             isFirst = false;
         } else {
-            finalNode->position.state = ALGPositionState::AUTO;
+            finalNode->position.temporaryOrigin(ALGPoint::zero);
+            cout << "auto layout temporary position of: " << finalNode << " to: " << ALGPoint::zero << endl;
         }
-        for (ALGWire* inputWire : finalNode->inputWires) {
+        for (ALGWire* inputWire : finalNode->inputWiresWithCommonParent()) {
             inputWire->autoLayout(layout);
         }
     }
-    cout << "did auto layout: " << this << endl;
+    cout << "did auto layout: " << this << " in group: " << group << endl;
 }
 
 // MARK: - Index

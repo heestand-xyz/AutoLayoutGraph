@@ -80,17 +80,17 @@ bool ALGWire::isIndirectlyConnectedWith(ALGWire* wire, ALGNode* checkNode, vecto
     return false;
 }
 
-vector<ALGNode*> ALGWire::leadingNodes() {
-    return nodesWith(this, leadingNode, vector<ALGNode*>());
+vector<ALGNode*> ALGWire::leadingNodesWithCommonParent() {
+    return nodesWithCommonParent(this, leadingNode, vector<ALGNode*>());
 }
 
-vector<ALGNode*> ALGWire::trailingNodes() {
-    return nodesWith(this, trailingNode, vector<ALGNode*>());
+vector<ALGNode*> ALGWire::trailingNodesWithCommonParent() {
+    return nodesWithCommonParent(this, trailingNode, vector<ALGNode*>());
 }
 
-vector<ALGNode*> ALGWire::nodesWith(ALGWire* wire, ALGNode* checkNode, vector<ALGNode*> checkedNodes) {
+vector<ALGNode*> ALGWire::nodesWithCommonParent(ALGWire* wire, ALGNode* checkNode, vector<ALGNode*> checkedNodes) {
     checkedNodes.push_back(checkNode);
-    for (ALGWire* inputWire : checkNode->inputWires) {
+    for (ALGWire* inputWire : checkNode->inputWiresWithCommonParent()) {
         if (inputWire == wire) {
             continue;
         }
@@ -102,7 +102,21 @@ vector<ALGNode*> ALGWire::nodesWith(ALGWire* wire, ALGNode* checkNode, vector<AL
         })) {
             continue;
         }
-        checkedNodes += nodesWith(inputWire, inputWire->leadingNode, checkedNodes);
+        checkedNodes += nodesWithCommonParent(inputWire, inputWire->leadingNode, checkedNodes);
+    }
+    for (ALGWire* outputWire : checkNode->outputWiresWithCommonParent()) {
+        if (outputWire == wire) {
+            continue;
+        }
+        if (outputWire->trailingNode == wire->trailingNode || outputWire->trailingNode == wire->leadingNode) {
+            return checkedNodes;
+        }
+        if (containsWhere(checkedNodes, [outputWire](ALGNode* node) {
+            return outputWire->trailingNode == node;
+        })) {
+            continue;
+        }
+        checkedNodes += nodesWithCommonParent(outputWire, outputWire->trailingNode, checkedNodes);
     }
     return checkedNodes;
 }
@@ -117,13 +131,14 @@ void ALGWire::autoLayout(ALGLayout layout) {
     }
     ALGPoint offset = autoOffset(layout);
     ALGPoint origin = trailingNode->position.origin + offset;
-    leadingNode->position.origin = origin;
     if (trailingNode->position.state == ALGPositionState::FINAL) {
-        leadingNode->position.state = ALGPositionState::FINAL;
+        leadingNode->position.finalizeOrigin(origin);
+        cout << "auto layout final position of: " << leadingNode << " to: " << origin << endl;
     } else {
-        leadingNode->position.state = ALGPositionState::AUTO;
+        leadingNode->position.temporaryOrigin(origin);
+        cout << "auto layout temporary position of: " << leadingNode << " to: " << origin << endl;
     }
-    for (ALGWire* inputWire : leadingNode->inputWires) {
+    for (ALGWire* inputWire : leadingNode->inputWiresWithCommonParent()) {
         inputWire->autoLayout(layout);
     }
     cout << "did auto layout: " << this << endl;
@@ -132,9 +147,10 @@ void ALGWire::autoLayout(ALGLayout layout) {
 void ALGWire::autoRearrange(ALGLayout layout) {
     cout << "will auto rearrange: " << this << endl;
     ALGPoint offset = autoOffset(layout);
-    trailingNode->position.origin = leadingNode->position.origin - offset;
-    trailingNode->position.state = ALGPositionState::FINAL;
-    for (ALGWire* outputWire : trailingNode->outputWires) {
+    ALGPoint origin = leadingNode->position.origin - offset;
+    trailingNode->position.finalizeOrigin(origin);
+    cout << "auto rearrange final position of: " << trailingNode << " to: " << origin << endl;
+    for (ALGWire* outputWire : trailingNode->outputWiresWithCommonParent()) {
         outputWire->autoRearrange(layout);
     }
     cout << "did auto rearrange: " << this << endl;
@@ -142,7 +158,7 @@ void ALGWire::autoRearrange(ALGLayout layout) {
 
 ALGPoint ALGWire::autoOffset(ALGLayout layout) {
     double offsetX = -layout.spacing - leadingNode->size(layout).width;
-    vector<ALGWire*> parallelWires = trailingNode->inputWires;
+    vector<ALGWire*> parallelWires = trailingNode->inputWiresWithCommonParent();
     auto parallelCount = parallelWires.size();
     double y = 0.0;
     double height = 0.0;

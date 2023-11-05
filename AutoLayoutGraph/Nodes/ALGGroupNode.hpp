@@ -33,6 +33,7 @@ public:
     bool contains(ALGNode* node);
     bool deepContains(ALGNode* node);
     bool deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout);
+    vector<ALGNode*> deepNodes();
         
     ALGSize size(ALGLayout layout);
     ALGRect deepFrame(ALGNode* node, ALGLayout layout);

@@ -37,7 +37,7 @@ bool ALGNode::hitTest(ALGPoint point, ALGLayout layout) {
     return hitX && hitY;
 }
 
-// MARK: - Stream
+// MARK: - Wires
 
 bool ALGNode::containsDownstream(ALGNode* node)
 {
@@ -60,6 +60,26 @@ bool ALGNode::containsUpstream(ALGNode* node)
         }
     }
     return false;
+}
+
+vector<ALGWire*> ALGNode::inputWiresWithCommonParent() {
+    vector<ALGWire*> groupWires = vector<ALGWire*>();
+    for (ALGWire* inputWire : inputWires) {
+        if (inputWire->hasCommonParent()) {
+            groupWires.push_back(inputWire);
+        }
+    }
+    return groupWires;
+}
+
+vector<ALGWire*> ALGNode::outputWiresWithCommonParent() {
+    vector<ALGWire*> groupWires = vector<ALGWire*>();
+    for (ALGWire* outputWire : outputWires) {
+        if (outputWire->hasCommonParent()) {
+            groupWires.push_back(outputWire);
+        }
+    }
+    return groupWires;
 }
 
 // MARK: - Root

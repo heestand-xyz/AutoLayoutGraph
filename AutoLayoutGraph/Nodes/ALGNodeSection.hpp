@@ -29,8 +29,11 @@ struct ALGNodeSection {
     ALGSize size(ALGLayout layout);
     ALGRect frame(ALGLayout layout);
     
+    /// A node with no outputs.
+    /// A node can also be final if the output wire is leading outside the group.
     vector<ALGNode*> finalNodes();
-    
+    vector<ALGNode*> deepNodes();
+
     void autoLayout(ALGLayout layout);
     
     int index() const;

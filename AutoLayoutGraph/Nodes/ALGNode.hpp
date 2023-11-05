@@ -40,6 +40,9 @@ public:
     bool containsDownstream(ALGNode* node);
     bool containsUpstream(ALGNode* node);
     
+    vector<ALGWire*> inputWiresWithCommonParent();
+    vector<ALGWire*> outputWiresWithCommonParent();
+    
     ALGGroupNode* root();
     
     ALGNodeSection* section();

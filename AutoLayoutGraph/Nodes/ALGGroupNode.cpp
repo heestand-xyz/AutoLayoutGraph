@@ -53,17 +53,16 @@ ALGSize ALGGroupNode::size(ALGLayout layout)
 }
 
 ALGRect ALGGroupNode::deepFrame(ALGNode* node, ALGLayout layout) {
-    for (int i = 0; i < sections.size(); i++) {
-        ALGNodeSection* section = sections[i];
+    for (ALGNodeSection* section : sections) {
         if (section->deepContains(node)) {
             for (ALGNode* n : section->nodes) {
                 if (n == node) {
-                    return ALGRect(section->origin(layout), node->size(layout));
+                    return ALGRect(section->origin(layout) + node->position.originInSection(section), node->size(layout));
                 }
                 ALGGroupNode* groupNode = dynamic_cast<ALGGroupNode*>(n);
                 if (groupNode && groupNode->deepContains(node)) {
                     ALGRect frame = groupNode->deepFrame(node, layout);
-                    return ALGRect(section->origin(layout) + frame.origin, node->size(layout));
+                    return ALGRect(section->origin(layout) + frame.origin, frame.size);
                 }
             }
         }
@@ -102,6 +101,16 @@ bool ALGGroupNode::deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout) 
     return false;
 }
 
+// MARK: - Nodes
+
+vector<ALGNode*> ALGGroupNode::deepNodes() {
+    vector<ALGNode*> deepNodes = vector<ALGNode*>();
+    for (ALGNodeSection* section : sections) {
+        deepNodes += section->deepNodes();
+    }
+    return deepNodes;
+}
+
 // MARK: - Update Sections
 
 void ALGGroupNode::updateSectionsOnDidConnect(ALGWire* wire) {
@@ -130,7 +139,7 @@ void ALGGroupNode::updateSectionsOnDidDisconnect(ALGWire* wire) {
     if (section) {
         if (!wire->isIndirectlyConnected()) {
             ALGNodeSection* newSection = addSection();
-            vector<ALGNode*> newNodes = wire->trailingNodes();
+            vector<ALGNode*> newNodes = wire->trailingNodesWithCommonParent();
             for (ALGNode* newNode : newNodes) {
                 removeIn(section->nodes, newNode);
                 newSection->nodes.push_back(newNode);
