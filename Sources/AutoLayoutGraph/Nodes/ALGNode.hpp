@@ -8,7 +8,6 @@
 #ifndef ALGNode_hpp
 #define ALGNode_hpp
 
-#include <string>
 #include "../Layout/ALGLayout.hpp"
 #include "../Layout/Types/ALGPoint.hpp"
 #include "../Layout/Types/ALGSize.hpp"

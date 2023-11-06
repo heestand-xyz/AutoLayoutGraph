@@ -6,7 +6,7 @@
 //
 
 #include "ALGItemNode.hpp"
-#include "ALGSize.hpp"
+#include "../Layout/Types/ALGSize.hpp"
 
 ALGItemNode::ALGItemNode(string typeName, ALGSize size)
 : ALGNode(typeName), fixedSize(size)

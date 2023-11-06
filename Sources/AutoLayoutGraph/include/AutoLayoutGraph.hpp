@@ -10,11 +10,11 @@
 
 #pragma GCC visibility push(default)
 
-#include "Nodes/ALGNode.hpp"
-#include "Nodes/ALGItemNode.hpp"
-#include "Nodes/ALGGroupNode.hpp"
-#include "Nodes/ALGNodeSection.hpp"
-#include "Layout/ALGLayout.hpp"
+#include "../Nodes/ALGNode.hpp"
+#include "../Nodes/ALGItemNode.hpp"
+#include "../Nodes/ALGGroupNode.hpp"
+#include "../Nodes/ALGNodeSection.hpp"
+#include "../Layout/ALGLayout.hpp"
 
 using namespace std;
 

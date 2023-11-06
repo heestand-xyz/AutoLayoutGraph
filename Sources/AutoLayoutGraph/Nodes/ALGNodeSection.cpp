@@ -7,7 +7,7 @@
 
 #include "ALGNodeSection.hpp"
 #include "ALGGroupNode.hpp"
-#include "ALGRect.hpp"
+#include "../Layout/Types/ALGRect.hpp"
 #include "../Helpers/Append.hpp"
 
 class ALGNodeSectionException : public runtime_error {

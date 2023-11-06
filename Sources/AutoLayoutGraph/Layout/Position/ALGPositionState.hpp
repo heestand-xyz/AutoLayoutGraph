@@ -15,14 +15,14 @@ enum class ALGPositionState : int {
 };
 
 inline std::ostream& operator<<(std::ostream& os, ALGPositionState state) {
-    switch (state) {
-        case ALGPositionState::NONE:
+    switch (static_cast<int>(state)) {
+        case static_cast<int>(ALGPositionState::NONE):
             os << "NONE";
             break;
-        case ALGPositionState::TEMP:
+        case static_cast<int>(ALGPositionState::TEMP):
             os << "TEMP";
             break;
-        case ALGPositionState::FINAL:
+        case static_cast<int>(ALGPositionState::FINAL):
             os << "FINAL";
             break;
         default:

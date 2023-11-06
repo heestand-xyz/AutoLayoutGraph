@@ -8,9 +8,9 @@
 #include <iostream>
 #include <stdexcept>
 #include "ALGNode.hpp"
-#include "ALGPoint.hpp"
 #include "ALGGroupNode.hpp"
 #include "ALGNodeSection.hpp"
+#include "../Layout/Types/ALGPoint.hpp"
 #include "../Wires/ALGWire.hpp"
 #include "../Helpers/Remove.hpp"
 #include "../Helpers/Contains.hpp"
