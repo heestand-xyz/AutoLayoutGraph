@@ -34,8 +34,7 @@ vector<ALGNode*> ALGGroupNode::allNodes() {
 
 // MARK: - Layout
 
-ALGSize ALGGroupNode::size(ALGLayout layout)
-{
+ALGSize ALGGroupNode::size(ALGLayout layout) {
     if (sections.empty()) {
         return ALGSize::zero;
     }
@@ -50,6 +49,10 @@ ALGSize ALGGroupNode::size(ALGLayout layout)
         totalSize.height += sectionSize.height;
     }
     return totalSize.padding(layout.padding);
+}
+
+ALGSize ALGGroupNode::groupSize(ALGLayout layout) {
+    return size(layout);
 }
 
 ALGRect ALGGroupNode::deepFrame(ALGNode* node, ALGLayout layout) {

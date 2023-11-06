@@ -22,6 +22,7 @@ using namespace std;
 class ALGGroupNode : public ALGNode {
     
 public:
+    
     vector<ALGNodeSection*> sections;
     
     ALGGroupNode(string typeName);
@@ -37,6 +38,7 @@ public:
     vector<ALGNode*> deepNodes();
         
     ALGSize size(ALGLayout layout);
+    ALGSize groupSize(ALGLayout layout) SWIFT_RETURNS_INDEPENDENT_VALUE;
     ALGRect deepFrame(ALGNode* node, ALGLayout layout);
     
     void updateSectionsOnDidConnect(ALGWire* wire);

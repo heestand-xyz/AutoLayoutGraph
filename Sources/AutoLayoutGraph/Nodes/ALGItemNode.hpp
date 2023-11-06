@@ -17,10 +17,12 @@ using namespace std;
 class ALGItemNode : public ALGNode {
     
 public:
+    
     ALGSize fixedSize;
     
     ALGItemNode(string typeName, ALGSize size);
     
+    void update(ALGSize size, ALGLayout layout);
     ALGSize size(ALGLayout layout);
     
     ALGNode* asNode() SWIFT_RETURNS_INDEPENDENT_VALUE;

@@ -8,6 +8,7 @@
 #ifndef ALGNode_hpp
 #define ALGNode_hpp
 
+#include <swift/bridging>
 #include "../Layout/ALGLayout.hpp"
 #include "../Layout/Types/ALGPoint.hpp"
 #include "../Layout/Types/ALGSize.hpp"
@@ -31,7 +32,7 @@ public:
     vector<ALGWire*> outputWires;
     
     ALGNode(string typeName);
-    virtual ~ALGNode() {}
+//    virtual ~ALGNode() {}
     
     virtual ALGSize size(ALGLayout layout) = 0;
     bool hitTest(ALGPoint point, ALGLayout layout);
@@ -44,7 +45,7 @@ public:
     
     ALGGroupNode* root();
     
-    ALGNodeSection* section();
+    ALGNodeSection* section() SWIFT_RETURNS_INDEPENDENT_VALUE;
     
     friend ostream& operator<<(ostream& os, const ALGNode* node);
 };

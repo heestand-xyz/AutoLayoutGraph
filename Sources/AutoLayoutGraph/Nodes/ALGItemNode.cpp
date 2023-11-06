@@ -7,16 +7,20 @@
 
 #include "ALGItemNode.hpp"
 #include "../Layout/Types/ALGSize.hpp"
+#include "ALGGroupNode.hpp"
 
 ALGItemNode::ALGItemNode(string typeName, ALGSize size)
 : ALGNode(typeName), fixedSize(size)
-{
-}
+{}
 
 // MARK: - Layout
 
-ALGSize ALGItemNode::size(ALGLayout layout)
-{
+void ALGItemNode::update(ALGSize size, ALGLayout layout) {
+    fixedSize = size;
+    parent->root()->autoLayout(layout);
+}
+
+ALGSize ALGItemNode::size(ALGLayout layout) {
     return fixedSize;
 }
 
