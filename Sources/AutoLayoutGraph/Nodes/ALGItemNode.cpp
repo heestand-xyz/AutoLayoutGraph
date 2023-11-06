@@ -13,10 +13,17 @@ ALGItemNode::ALGItemNode(string typeName, ALGSize size)
 {
 }
 
+// MARK: - Layout
 
 ALGSize ALGItemNode::size(ALGLayout layout)
 {
     return fixedSize;
+}
+
+// MARK: - As
+
+ALGNode* ALGItemNode::asNode() {
+    return this;
 }
 
 // MARK: - Print

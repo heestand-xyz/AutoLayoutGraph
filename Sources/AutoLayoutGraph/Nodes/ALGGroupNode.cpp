@@ -181,6 +181,12 @@ void ALGGroupNode::autoLayout(ALGLayout layout) {
     cout << "did auto layout: " << this << endl;
 }
 
+// MARK: - As
+
+ALGNode* ALGGroupNode::asNode() {
+    return this;
+}
+
 // MARK: - Print
 
 ostream& operator<<(ostream& os, const ALGGroupNode* groupNode) {

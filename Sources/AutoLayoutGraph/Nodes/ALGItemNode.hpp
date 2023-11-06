@@ -8,6 +8,7 @@
 #ifndef ALGItemNode_hpp
 #define ALGItemNode_hpp
 
+#include <swift/bridging>
 #include "ALGNode.hpp"
 #include "../Layout/Types/ALGSize.hpp"
 
@@ -21,6 +22,8 @@ public:
     ALGItemNode(string typeName, ALGSize size);
     
     ALGSize size(ALGLayout layout);
+    
+    ALGNode* asNode() SWIFT_RETURNS_INDEPENDENT_VALUE;
     
     friend ostream& operator<<(ostream& os, const ALGItemNode* itemNode);
 };

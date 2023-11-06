@@ -8,6 +8,7 @@
 #ifndef ALGGroupNode_hpp
 #define ALGGroupNode_hpp
 
+#include <swift/bridging>
 #include <vector>
 #include "ALGNode.hpp"
 #include "../Wires/ALGWire.hpp"
@@ -47,6 +48,8 @@ public:
     bool isRoot();
     
     void autoLayout(ALGLayout layout);
+    
+    ALGNode* asNode() SWIFT_RETURNS_INDEPENDENT_VALUE;
     
     friend ostream& operator<<(ostream& os, const ALGGroupNode* groupNode);
 };
