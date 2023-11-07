@@ -28,6 +28,7 @@ public:
     
     void update(ALGSize size, ALGLayout layout);
     ALGSize size(ALGLayout layout);
+    ALGPoint origin(ALGLayout layout);
     
     ALGNode* asNode() SWIFT_RETURNS_INDEPENDENT_VALUE;
     

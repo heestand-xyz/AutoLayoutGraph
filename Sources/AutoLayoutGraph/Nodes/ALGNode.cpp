@@ -105,7 +105,8 @@ ALGNodeSection* ALGNode::section() {
             }
         }
     }
-    return nullptr;
+    cout << "Section - Parent not found for node: " << this << endl;
+    throw ALGNodeException("Section - Parent not found.");
 }
 
 // MARK: - Print

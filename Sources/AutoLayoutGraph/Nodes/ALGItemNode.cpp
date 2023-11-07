@@ -24,6 +24,10 @@ ALGSize ALGItemNode::size(ALGLayout layout) {
     return fixedSize;
 }
 
+ALGPoint ALGItemNode::origin(ALGLayout layout) {
+    return position.originInSection(section());
+}
+
 // MARK: - As
 
 ALGNode* ALGItemNode::asNode() {

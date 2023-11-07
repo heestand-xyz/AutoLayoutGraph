@@ -31,6 +31,8 @@ public:
         cout << "deinit of group " << this << endl;
     }
     
+    ALGPoint origin(ALGLayout layout);
+    
     void add(ALGNode* node, ALGLayout layout);
     void remove(ALGNode* node, ALGLayout layout);
     

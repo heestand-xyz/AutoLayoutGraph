@@ -34,6 +34,10 @@ vector<ALGNode*> ALGGroupNode::allNodes() {
 
 // MARK: - Layout
 
+ALGPoint ALGGroupNode::origin(ALGLayout layout) {
+    return position.originInSection(section());
+}
+
 ALGSize ALGGroupNode::size(ALGLayout layout) {
     if (sections.empty()) {
         return ALGSize::zero;
