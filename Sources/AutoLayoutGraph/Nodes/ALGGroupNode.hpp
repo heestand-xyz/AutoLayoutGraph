@@ -27,6 +27,10 @@ public:
     
     ALGGroupNode(string typeName);
     
+    ~ALGGroupNode() {
+        cout << "deinit of group " << this << endl;
+    }
+    
     void add(ALGNode* node, ALGLayout layout);
     void remove(ALGNode* node, ALGLayout layout);
     

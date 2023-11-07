@@ -70,6 +70,7 @@ ALGRect ALGGroupNode::deepFrame(ALGNode* node, ALGLayout layout) {
             }
         }
     }
+    cout << "Failure - Getting deep frame failed, node not found." << endl;
     throw ALGGroupNodeException("Getting deep frame failed, node not found.");
 }
 
@@ -129,6 +130,7 @@ void ALGGroupNode::updateSectionsOnDidConnect(ALGWire* wire) {
         }
     }
     if (leadingSection == nullptr || trailingSection == nullptr) {
+        cout << "Failure - Update sections on did connect failed, some section not found." << endl;
         throw ALGGroupNodeException("Update sections on did connect failed, some section not found.");
     }
     leadingSection->nodes += trailingSection->nodes;
@@ -149,6 +151,7 @@ void ALGGroupNode::updateSectionsOnDidDisconnect(ALGWire* wire) {
             }
         }
     } else {
+        cout << "Failure - Update sections on did disconnect failed, section not found." << endl;
         throw ALGGroupNodeException("Update sections on did disconnect failed, section not found.");
     }
 }

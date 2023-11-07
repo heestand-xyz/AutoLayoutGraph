@@ -32,7 +32,10 @@ public:
     vector<ALGWire*> outputWires;
     
     ALGNode(string typeName);
-//    virtual ~ALGNode() {}
+    
+    virtual ~ALGNode() {
+        cout << "deinit of " << this << endl;
+    }
     
     virtual ALGSize size(ALGLayout layout) = 0;
     bool hitTest(ALGPoint point, ALGLayout layout);

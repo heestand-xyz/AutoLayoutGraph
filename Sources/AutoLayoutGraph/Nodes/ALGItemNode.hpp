@@ -22,6 +22,10 @@ public:
     
     ALGItemNode(string typeName, ALGSize size);
     
+    ~ALGItemNode() {
+        cout << "deinit of item " << this << endl;
+    }
+    
     void update(ALGSize size, ALGLayout layout);
     ALGSize size(ALGLayout layout);
     

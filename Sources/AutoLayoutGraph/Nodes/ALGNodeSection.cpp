@@ -169,6 +169,7 @@ int ALGNodeSection::index() const {
         }
     }
     
+    cout << "Failure - Section index not found." << endl;
     throw ALGNodeSectionException("Section index not found.");
 }
 
