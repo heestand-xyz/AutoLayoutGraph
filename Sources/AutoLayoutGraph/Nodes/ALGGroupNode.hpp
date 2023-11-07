@@ -28,7 +28,7 @@ public:
     ALGGroupNode(string typeName);
     
     ~ALGGroupNode() {
-        cout << "deinit of group " << this << endl;
+//        cout << "deinit of group " << this << endl;
     }
     
     ALGPoint origin(ALGLayout layout);

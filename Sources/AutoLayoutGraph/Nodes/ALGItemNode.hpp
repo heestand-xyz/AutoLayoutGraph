@@ -23,7 +23,7 @@ public:
     ALGItemNode(string typeName, ALGSize size);
     
     ~ALGItemNode() {
-        cout << "deinit of item " << this << endl;
+//        cout << "deinit of item " << this << endl;
     }
     
     void update(ALGSize size, ALGLayout layout);
@@ -31,6 +31,8 @@ public:
     ALGPoint origin(ALGLayout layout);
     
     ALGNode* asNode() SWIFT_RETURNS_INDEPENDENT_VALUE;
+    
+    bool hasParent() SWIFT_RETURNS_INDEPENDENT_VALUE;
     
     friend ostream& operator<<(ostream& os, const ALGItemNode* itemNode);
 };

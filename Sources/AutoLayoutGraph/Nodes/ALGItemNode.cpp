@@ -34,6 +34,15 @@ ALGNode* ALGItemNode::asNode() {
     return this;
 }
 
+// MARK: - Has
+
+bool ALGItemNode::hasParent() {
+    if (parent) {
+        return true;
+    }
+    return false;
+}
+
 // MARK: - Print
 
 ostream& operator<<(ostream& os, const ALGItemNode* itemNode) {

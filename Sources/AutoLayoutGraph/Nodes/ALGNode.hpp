@@ -34,7 +34,7 @@ public:
     ALGNode(string typeName);
     
     virtual ~ALGNode() {
-        cout << "deinit of " << this << endl;
+//        cout << "deinit of " << this << endl;
     }
     
     virtual ALGSize size(ALGLayout layout) = 0;
