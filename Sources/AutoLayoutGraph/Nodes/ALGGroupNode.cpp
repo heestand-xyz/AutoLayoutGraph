@@ -5,7 +5,7 @@
 //  Created by Anton Heestand on 2023-10-31.
 //
 
-#include <iostream>
+#include <os/log.h>
 #include "ALGGroupNode.hpp"
 #include "ALGNodeSection.hpp"
 #include "../Helpers/First.hpp"
@@ -16,6 +16,12 @@
 ALGGroupNode::ALGGroupNode(string typeName)
 : ALGNode(typeName)
 { }
+
+// MARK: - Logger
+
+os_log_t groupNodeLogger = os_log_create("AutoLayoutGraph", "ALGGroupNode");
+
+// MARK: - Exception
 
 class ALGGroupNodeException : public runtime_error {
 public:
@@ -75,8 +81,8 @@ ALGRect ALGGroupNode::deepFrame(ALGNode* node, ALGLayout layout) {
             }
         }
     }
-    cout << "Failure - Getting deep frame failed, node not found." << endl;
-    throw ALGGroupNodeException("Getting deep frame failed, node not found.");
+    os_log_fault(groupNodeLogger, "getting deep frame failed, node not found");
+    throw ALGGroupNodeException("getting deep frame failed, node not found");
 }
 
 // MARK: - Contains
@@ -135,8 +141,8 @@ void ALGGroupNode::updateSectionsOnDidConnect(ALGWire* wire) {
         }
     }
     if (leadingSection == nullptr || trailingSection == nullptr) {
-        cout << "Failure - Update sections on did connect failed, some section not found." << endl;
-        throw ALGGroupNodeException("Update sections on did connect failed, some section not found.");
+        os_log_fault(groupNodeLogger, "update sections on did connect failed, some section not found");
+        throw ALGGroupNodeException("update sections on did connect failed, some section not found");
     }
     leadingSection->nodes += trailingSection->nodes;
     removeSection(trailingSection);
@@ -156,17 +162,21 @@ void ALGGroupNode::updateSectionsOnDidDisconnect(ALGWire* wire) {
             }
         }
     } else {
-        cout << "Failure - Update sections on did disconnect failed, section not found." << endl;
-        throw ALGGroupNodeException("Update sections on did disconnect failed, section not found.");
+        os_log_fault(groupNodeLogger, "update sections on did disconnect failed, section not found");
+        throw ALGGroupNodeException("update sections on did disconnect failed, section not found");
     }
 }
 
 // MARK: - Section
 
 ALGNodeSection* ALGGroupNode::addSection() {
+    os_log_info(groupNodeLogger, "will add section to: %{public}s",
+                description().c_str());
     ALGNodeSection* section = new ALGNodeSection();
     section->group = this;
     sections.push_back(section);
+    os_log_info(groupNodeLogger, "did add section to: %{public}s",
+                description().c_str());
     return section;
 }
 
@@ -179,17 +189,22 @@ void ALGGroupNode::removeSection(ALGNodeSection* section) {
 // MARK: - Is
 
 bool ALGGroupNode::isRoot() {
-    return parent == nullptr;
+    if (parent) {
+        return false;
+    }
+    return true;
 }
 
 // MARK: - Auto Layout
 
 void ALGGroupNode::autoLayout(ALGLayout layout) {
-    cout << "will auto layout: " << this << endl;
+    os_log_info(groupNodeLogger, "will auto layout: %{public}s",
+                description().c_str());
     for (ALGNodeSection* section : sections) {
         section->autoLayout(layout);
     }
-    cout << "did auto layout: " << this << endl;
+    os_log_info(groupNodeLogger, "did auto layout: %{public}s",
+                description().c_str());
 }
 
 // MARK: - As
@@ -198,9 +213,13 @@ ALGNode* ALGGroupNode::asNode() {
     return this;
 }
 
-// MARK: - Print
+// MARK: - Description
 
 ostream& operator<<(ostream& os, const ALGGroupNode* groupNode) {
     os << "groupNode('" << groupNode->typeName << "')";
     return os;
+}
+
+string ALGGroupNode::description() {
+    return "groupNode('" + typeName + "')";
 }

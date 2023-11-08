@@ -24,6 +24,7 @@ struct ALGRect {
     ALGRect padding(double padding);
     
     friend ostream& operator<<(ostream& os, const ALGRect& rect);
+    string description();
 };
 
 #endif /* ALGRect_hpp */

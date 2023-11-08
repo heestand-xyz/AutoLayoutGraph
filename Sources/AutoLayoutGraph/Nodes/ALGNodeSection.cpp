@@ -5,10 +5,17 @@
 //  Created by Anton Heestand on 2023-10-31.
 //
 
+#include <os/log.h>
 #include "ALGNodeSection.hpp"
 #include "ALGGroupNode.hpp"
 #include "../Layout/Types/ALGRect.hpp"
 #include "../Helpers/Append.hpp"
+
+// MARK: - Logger
+
+os_log_t nodeSectionLogger = os_log_create("AutoLayoutGraph", "ALGNodeSection");
+
+// MARK: - Exception
 
 class ALGNodeSectionException : public runtime_error {
 public:
@@ -131,7 +138,9 @@ vector<ALGNode*> ALGNodeSection::deepNodes() {
 // MARK: - Auto Layout
 
 void ALGNodeSection::autoLayout(ALGLayout layout) {
-    cout << "will auto layout: " << this << " in group: " << group << endl;
+    os_log_info(nodeSectionLogger, "will auto layout: %{public}s in group: %{public}s",
+                description().c_str(),
+                group->description().c_str());
     for (ALGNode* node : nodes) {
         ALGGroupNode* groupNode = dynamic_cast<ALGGroupNode*>(node);
         if (groupNode) {
@@ -145,37 +154,39 @@ void ALGNodeSection::autoLayout(ALGLayout layout) {
     for (ALGNode* finalNode : finalNodes()) {
         if (isFirst) {
             finalNode->position.finalizeOrigin(ALGPoint::zero);
-            cout << "auto layout final position of: " << finalNode << " to: " << ALGPoint::zero << endl;
             isFirst = false;
         } else {
             finalNode->position.temporaryOrigin(ALGPoint::zero);
-            cout << "auto layout temporary position of: " << finalNode << " to: " << ALGPoint::zero << endl;
         }
         for (ALGWire* inputWire : finalNode->inputWiresWithCommonParent()) {
             inputWire->autoLayout(layout);
         }
     }
-    cout << "did auto layout: " << this << " in group: " << group << endl;
+    os_log_info(nodeSectionLogger, "did auto layout: %{public}s in group: %{public}s",
+                description().c_str(),
+                group->description().c_str());
 }
 
 // MARK: - Index
 
 int ALGNodeSection::index() const {
-    
     for (int i = 0; i < group->sections.size(); i++) {
         ALGNodeSection* section = group->sections[i];
         if (section == this) {
             return i;
         }
     }
-    
-    cout << "Failure - Section index not found." << endl;
-    throw ALGNodeSectionException("Section index not found.");
+    os_log_fault(nodeSectionLogger, "section index not found");
+    throw ALGNodeSectionException("section index not found");
 }
 
-// MARK: - Print
+// MARK: - Description
 
 ostream& operator<<(ostream& os, const ALGNodeSection* section) {
-    os << "section(" << section->index() << ")";
+    os << "section(index: " << section->index() << ")";
     return os;
+}
+
+string ALGNodeSection::description() {
+    return "section(index: " + to_string(index()) + ")";
 }

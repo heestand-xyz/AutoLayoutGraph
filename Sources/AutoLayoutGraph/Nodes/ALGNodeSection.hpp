@@ -21,6 +21,10 @@ struct ALGNodeSection {
 
     vector<ALGNode*> nodes;
     
+    ~ALGNodeSection() {
+        cout << "deinit of " << this << endl;
+    }
+    
     bool contains(ALGNode* node);
     bool deepContains(ALGNode* node);
     bool deepHitTest(ALGNode* node, ALGPoint point, ALGLayout layout);
@@ -39,6 +43,7 @@ struct ALGNodeSection {
     int index() const;
     
     friend ostream& operator<<(ostream& os, const ALGNodeSection* section);
+    string description();
 };
 
 #endif /* ALGNodeSection_hpp */

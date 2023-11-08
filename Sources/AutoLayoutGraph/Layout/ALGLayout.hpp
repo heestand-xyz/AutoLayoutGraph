@@ -17,6 +17,9 @@ struct ALGLayout {
     double spacing;
     
     ALGLayout(double padding, double spacing);
+
+    friend ostream& operator<<(ostream& os, const ALGLayout layout);
+    string description();
 };
 
 #endif /* ALGLayout_hpp */

@@ -15,8 +15,13 @@ ALGRect ALGRect::padding(double padding) {
     return ALGRect(origin - padding, size.padding(padding));
 }
 
+// MARK: - Description
+
 ostream& operator<<(ostream& os, const ALGRect& rect) {
     os << "rect(origin: " << rect.origin << ", size: " << rect.size << ")";
     return os;
 }
 
+string ALGRect::description() {
+    return "rect(origin: " + origin.description() + ", size: " + size.description() + ")";
+}

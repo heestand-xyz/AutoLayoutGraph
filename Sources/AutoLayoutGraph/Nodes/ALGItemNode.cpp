@@ -45,10 +45,13 @@ bool ALGItemNode::hasParent() {
     return false;
 }
 
-// MARK: - Print
+// MARK: - Description
 
 ostream& operator<<(ostream& os, const ALGItemNode* itemNode) {
     os << "itemNode('" << itemNode->typeName << "')";
     return os;
 }
 
+string ALGItemNode::description() {
+    return "itemNode('" + typeName + "')";
+}

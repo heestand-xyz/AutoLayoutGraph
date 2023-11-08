@@ -24,6 +24,10 @@ struct ALGPosition {
     void reset();
     void temporaryOrigin(ALGPoint origin);
     void finalizeOrigin(ALGPoint origin);
+    
+    friend ostream& operator<<(ostream& os, const ALGPosition position);
+    string description();
+    string stateDescription();
 };
 
 #endif /* ALGPosition_hpp */

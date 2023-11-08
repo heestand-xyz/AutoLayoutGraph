@@ -28,7 +28,7 @@ public:
     ALGGroupNode(string typeName);
     
     ~ALGGroupNode() {
-//        cout << "deinit of group " << this << endl;
+        cout << "deinit of group " << this << endl;
     }
     
     ALGPoint origin(ALGLayout layout);
@@ -60,6 +60,7 @@ public:
     ALGNode* asNode() SWIFT_RETURNS_INDEPENDENT_VALUE;
     
     friend ostream& operator<<(ostream& os, const ALGGroupNode* groupNode);
+    string description();
 };
 
 #endif /* ALGGroupNode_hpp */

@@ -45,7 +45,13 @@ ALGSize ALGSize::operator/(double value) {
     return ALGSize(width / value, height / value);
 }
 
+// MARK: - Description
+
 ostream& operator<<(ostream& os, const ALGSize& size) {
     os << "size(width: " << size.width << ", height: " << size.height << ")";
     return os;
+}
+
+string ALGSize::description() {
+    return "size(width: " + to_string(width) + ", height: " + to_string(height) + ")";
 }

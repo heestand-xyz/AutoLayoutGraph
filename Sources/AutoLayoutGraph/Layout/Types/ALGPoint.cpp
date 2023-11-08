@@ -40,7 +40,13 @@ ALGPoint ALGPoint::operator/(double value) {
     return ALGPoint(x / value, y / value);
 }
 
+// MARK: - Description
+
 ostream& operator<<(ostream& os, const ALGPoint& point) {
     os << "point(x: " << point.x << ", y: " << point.y << ")";
     return os;
+}
+
+string ALGPoint::description() {
+    return "point(x: " + to_string(x) + ", y: " + to_string(y) + ")";
 }

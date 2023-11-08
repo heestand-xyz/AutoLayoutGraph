@@ -51,6 +51,7 @@ public:
     ALGNodeSection* section() SWIFT_RETURNS_INDEPENDENT_VALUE;
     
     friend ostream& operator<<(ostream& os, const ALGNode* node);
+    string description();
 };
 
 #endif /* ALGNode_hpp */

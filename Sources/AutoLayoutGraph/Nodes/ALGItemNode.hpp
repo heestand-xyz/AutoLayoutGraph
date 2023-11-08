@@ -23,7 +23,7 @@ public:
     ALGItemNode(string typeName, ALGSize size);
     
     ~ALGItemNode() {
-//        cout << "deinit of item " << this << endl;
+        cout << "deinit of item " << this << endl;
     }
     
     void update(ALGSize size, ALGLayout layout);
@@ -35,6 +35,7 @@ public:
     bool hasParent() SWIFT_RETURNS_INDEPENDENT_VALUE;
     
     friend ostream& operator<<(ostream& os, const ALGItemNode* itemNode);
+    string description();
 };
 
 #endif /* ALGItemNode_hpp */

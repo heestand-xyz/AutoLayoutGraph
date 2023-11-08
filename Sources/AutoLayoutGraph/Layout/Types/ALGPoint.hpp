@@ -31,6 +31,7 @@ struct ALGPoint {
     ALGPoint operator/(double point);
     
     friend ostream& operator<<(ostream& os, const ALGPoint& point);
+    string description();
 };
 
 #endif /* ALGPoint_hpp */

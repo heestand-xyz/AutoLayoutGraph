@@ -5,6 +5,8 @@
 //  Created by Anton Heestand on 2023-11-01.
 //
 
+
+#include <os/log.h>
 #include "ALGWire.hpp"
 #include "../Nodes/ALGGroupNode.hpp"
 #include "../Helpers/Contains.hpp"
@@ -14,6 +16,12 @@ ALGWire::ALGWire(ALGNode* leadingNode, ALGNode* trailingNode) :
 leadingNode(leadingNode),
 trailingNode(trailingNode)
 { }
+
+// MARK: - Logger
+
+os_log_t wireLogger = os_log_create("AutoLayoutGraph", "ALGWire");
+
+// MARK: - Common Parent
 
 bool ALGWire::hasCommonParent() {
     return leadingNode->parent == trailingNode->parent;
@@ -37,47 +45,6 @@ ALGNode* ALGWire::trailingNodeWithCommonParent() {
         currentNode = currentNode->parent;
     }
     return currentNode;
-}
-
-bool ALGWire::isIndirectlyConnected() {
-    return isIndirectlyConnectedWith(this, leadingNode, vector<ALGNode*>());
-}
-
-bool ALGWire::isIndirectlyConnectedWith(ALGWire* wire, ALGNode* checkNode, vector<ALGNode*> checkedNodes) {
-    checkedNodes.push_back(checkNode);
-    for (ALGWire* inputWire : checkNode->inputWires) {
-        if (inputWire == wire) {
-            continue;
-        }
-        if (inputWire->leadingNode == wire->leadingNode || inputWire->leadingNode == wire->trailingNode) {
-            return true;
-        }
-        if (containsWhere(checkedNodes, [inputWire](ALGNode* node) {
-            return inputWire->leadingNode == node;
-        })) {
-            continue;
-        }
-        if (isIndirectlyConnectedWith(wire, inputWire->leadingNode, checkedNodes)) {
-            return true;
-        }
-    }
-    for (ALGWire* outputWire : checkNode->outputWires) {
-        if (outputWire == wire) {
-            continue;
-        }
-        if (outputWire->trailingNode == wire->leadingNode || outputWire->trailingNode == wire->trailingNode) {
-            return true;
-        }
-        if (containsWhere(checkedNodes, [outputWire](ALGNode* node) {
-            return outputWire->trailingNode == node;
-        })) {
-            continue;
-        }
-        if (isIndirectlyConnectedWith(wire, outputWire->trailingNode, checkedNodes)) {
-            return true;
-        }
-    }
-    return false;
 }
 
 vector<ALGNode*> ALGWire::leadingNodesWithCommonParent() {
@@ -121,40 +88,86 @@ vector<ALGNode*> ALGWire::nodesWithCommonParent(ALGWire* wire, ALGNode* checkNod
     return checkedNodes;
 }
 
+// MARK: - Indirectly Connected
+
+bool ALGWire::isIndirectlyConnected() {
+    return isIndirectlyConnectedWith(this, leadingNode, vector<ALGNode*>());
+}
+
+bool ALGWire::isIndirectlyConnectedWith(ALGWire* wire, ALGNode* checkNode, vector<ALGNode*> checkedNodes) {
+    checkedNodes.push_back(checkNode);
+    for (ALGWire* inputWire : checkNode->inputWires) {
+        if (inputWire == wire) {
+            continue;
+        }
+        if (inputWire->leadingNode == wire->leadingNode || inputWire->leadingNode == wire->trailingNode) {
+            return true;
+        }
+        if (containsWhere(checkedNodes, [inputWire](ALGNode* node) {
+            return inputWire->leadingNode == node;
+        })) {
+            continue;
+        }
+        if (isIndirectlyConnectedWith(wire, inputWire->leadingNode, checkedNodes)) {
+            return true;
+        }
+    }
+    for (ALGWire* outputWire : checkNode->outputWires) {
+        if (outputWire == wire) {
+            continue;
+        }
+        if (outputWire->trailingNode == wire->leadingNode || outputWire->trailingNode == wire->trailingNode) {
+            return true;
+        }
+        if (containsWhere(checkedNodes, [outputWire](ALGNode* node) {
+            return outputWire->trailingNode == node;
+        })) {
+            continue;
+        }
+        if (isIndirectlyConnectedWith(wire, outputWire->trailingNode, checkedNodes)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 // MARK: - Auto Layout
 
 void ALGWire::autoLayout(ALGLayout layout) {
-    cout << "will auto layout: " << this << endl;
+    os_log_info(wireLogger, "will auto layout: %{public}s",
+                description().c_str());
     if (leadingNode->position.state == ALGPositionState::FINAL) {
         autoRearrange(layout);
         return;
     }
-    ALGPoint offset = ALGPoint(-offsetX(layout), -offsetY(layout)); //offsetForLeadingNode(layout);
+    ALGPoint offset = ALGPoint(-offsetX(layout), -offsetY(layout));
     ALGPoint origin = trailingNode->position.origin + offset;
     if (trailingNode->position.state == ALGPositionState::FINAL) {
         leadingNode->position.finalizeOrigin(origin);
-        cout << "auto layout final position of: " << leadingNode << " to: " << origin << endl;
     } else {
         leadingNode->position.temporaryOrigin(origin);
-        cout << "auto layout temporary position of: " << leadingNode << " to: " << origin << endl;
     }
     for (ALGWire* inputWire : leadingNode->inputWiresWithCommonParent()) {
         inputWire->autoLayout(layout);
     }
-    cout << "did auto layout: " << this << endl;
+    os_log_info(wireLogger, "did auto layout: %{public}s",
+                description().c_str());
 }
 
 void ALGWire::autoRearrange(ALGLayout layout) {
-    cout << "will auto rearrange: " << this << endl;
-    ALGPoint offset = ALGPoint(offsetX(layout), offsetY(layout)); //offsetForTrailingNode(layout);
+    os_log_info(wireLogger, "will auto rearrange: %{public}s",
+                description().c_str());
+    ALGPoint offset = ALGPoint(offsetX(layout), offsetY(layout));
     ALGPoint origin = leadingNode->position.origin + offset;
     trailingNode->position.finalizeOrigin(origin);
-    cout << "auto rearrange final position of: " << trailingNode << " to: " << origin << endl;
     for (ALGWire* outputWire : trailingNode->outputWiresWithCommonParent()) {
         outputWire->autoRearrange(layout);
     }
-    cout << "did auto rearrange: " << this << endl;
+    os_log_info(wireLogger, "did auto rearrange: %{public}s",
+                description().c_str());
 }
+
+// MARK: - Offset
 
 double ALGWire::offsetX(ALGLayout layout) {
     return leadingNode->size(layout).width + layout.spacing;
@@ -192,49 +205,13 @@ double ALGWire::offsetY(ALGLayout layout) {
     return leadingOffsetY + trailingOffsetY;
 }
 
-//ALGPoint ALGWire::offsetForLeadingNode(ALGLayout layout) {
-//    double offsetX = -layout.spacing - leadingNode->size(layout).width;
-//    vector<ALGWire*> parallelWires = trailingNode->inputWiresWithCommonParent();
-//    auto parallelCount = parallelWires.size();
-//    double y = 0.0;
-//    double height = 0.0;
-//    for (int i = 0; i < parallelCount; i++) {
-//        ALGWire* parallelWire = parallelWires[i];
-//        if (parallelWire == this) {
-//            y = height;
-//        }
-//        height += parallelWire->leadingNode->size(layout).height;
-//        if (i < parallelCount - 1) {
-//            height += layout.spacing;
-//        }
-//    }
-//    double offsetY = y - height / 2 + trailingNode->size(layout).height / 2;
-//    return ALGPoint(offsetX, offsetY);
-//}
-
-//ALGPoint ALGWire::offsetForTrailingNode(ALGLayout layout) {
-//    double offsetX = leadingNode->size(layout).width + layout.spacing;
-//    vector<ALGWire*> parallelWires = leadingNode->outputWiresWithCommonParent();
-//    auto parallelCount = parallelWires.size();
-//    double y = 0.0;
-//    double height = 0.0;
-//    for (int i = 0; i < parallelCount; i++) {
-//        ALGWire* parallelWire = parallelWires[i];
-//        if (parallelWire == this) {
-//            y = height;
-//        }
-//        height += parallelWire->trailingNode->size(layout).height;
-//        if (i < parallelCount - 1) {
-//            height += layout.spacing;
-//        }
-//    }
-//    double offsetY = y - height / 2 + leadingNode->size(layout).height / 2;
-//    return ALGPoint(offsetX, offsetY);
-//}
-
-// MARK: - Print
+// MARK: - Description
 
 ostream& operator<<(ostream& os, const ALGWire* wire) {
     os << "wire(from: " << wire->leadingNode << " to: " << wire->trailingNode << ")";
     return os;
+}
+
+string ALGWire::description() {
+    return "wire(from: " + leadingNode->description() + " to: " + trailingNode->description() + ")";
 }

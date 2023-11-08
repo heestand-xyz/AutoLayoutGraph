@@ -5,7 +5,7 @@
 //  Created by Anton Heestand on 2023-10-31.
 //
 
-#include <iostream>
+#include <os/log.h>
 #include <stdexcept>
 #include "ALGNode.hpp"
 #include "ALGGroupNode.hpp"
@@ -19,6 +19,10 @@
 ALGNode::ALGNode(string typeName)
 : typeName(typeName), position(ALGPosition())
 {}
+
+// MARK: - Logger
+
+os_log_t nodeLogger = os_log_create("AutoLayoutGraph", "ALGNode");
 
 // MARK: - Exception
 
@@ -105,13 +109,17 @@ ALGNodeSection* ALGNode::section() {
             }
         }
     }
-    cout << "Failure - Section - Parent not found for node: " << this << endl;
-    throw ALGNodeException("Section - Parent not found.");
+    os_log_fault(nodeLogger, "parent not found for section");
+    throw ALGNodeException("parent not found for section");
 }
 
-// MARK: - Print
+// MARK: - Description
 
 ostream& operator<<(ostream& os, const ALGNode* node) {
     os << "node('" << node->typeName << "')";
     return os;
+}
+
+string ALGNode::description() {
+    return "node('" + typeName + "')";
 }

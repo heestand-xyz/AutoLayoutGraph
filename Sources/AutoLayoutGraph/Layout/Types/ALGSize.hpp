@@ -34,6 +34,7 @@ struct ALGSize {
     ALGSize operator/(double point);
     
     friend ostream& operator<<(ostream& os, const ALGSize& size);
+    string description();
 };
 
 #endif /* ALGSize_hpp */
