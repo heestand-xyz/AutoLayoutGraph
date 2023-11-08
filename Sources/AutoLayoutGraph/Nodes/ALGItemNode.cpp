@@ -8,6 +8,7 @@
 #include "ALGItemNode.hpp"
 #include "../Layout/Types/ALGSize.hpp"
 #include "ALGGroupNode.hpp"
+#include "ALGNodeSection.hpp"
 
 ALGItemNode::ALGItemNode(string typeName, ALGSize size)
 : ALGNode(typeName), fixedSize(size)
@@ -25,7 +26,8 @@ ALGSize ALGItemNode::size(ALGLayout layout) {
 }
 
 ALGPoint ALGItemNode::origin(ALGLayout layout) {
-    return position.originInSection(section());
+    ALGNodeSection* s = section();
+    return s->origin(layout) + position.originInSection(s);
 }
 
 // MARK: - As
