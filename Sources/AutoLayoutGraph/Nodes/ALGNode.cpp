@@ -16,8 +16,8 @@
 #include "../Helpers/Contains.hpp"
 #include "../Helpers/Append.hpp"
 
-ALGNode::ALGNode(string typeName)
-: typeName(typeName), position(ALGPosition())
+ALGNode::ALGNode(string name, string typeName)
+: name(name), typeName(typeName), position(ALGPosition())
 {}
 
 // MARK: - Logger
@@ -116,10 +116,10 @@ ALGNodeSection* ALGNode::section() {
 // MARK: - Description
 
 ostream& operator<<(ostream& os, const ALGNode* node) {
-    os << "node('" << node->typeName << "')";
+    os << "node(name: '" << node->name << "', typeName: '" << node->typeName << "')";
     return os;
 }
 
 string ALGNode::description() {
-    return "node('" + typeName + "')";
+    return "node(name: '" + name + "', typeName: '" + typeName + "')";
 }

@@ -25,7 +25,7 @@ public:
     
     vector<ALGNodeSection*> sections;
     
-    ALGGroupNode(string typeName);
+    ALGGroupNode(string name, string typeName);
     
     ~ALGGroupNode() {
         cout << "deinit of group " << this << endl;

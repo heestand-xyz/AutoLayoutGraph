@@ -20,7 +20,7 @@ public:
     
     ALGSize fixedSize;
     
-    ALGItemNode(string typeName, ALGSize size);
+    ALGItemNode(string name, string typeName, ALGSize size);
     
     ~ALGItemNode() {
         cout << "deinit of item " << this << endl;

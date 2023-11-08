@@ -10,8 +10,8 @@
 #include "ALGGroupNode.hpp"
 #include "ALGNodeSection.hpp"
 
-ALGItemNode::ALGItemNode(string typeName, ALGSize size)
-: ALGNode(typeName), fixedSize(size)
+ALGItemNode::ALGItemNode(string name, string typeName, ALGSize size)
+: ALGNode(name, typeName), fixedSize(size)
 {}
 
 // MARK: - Layout
@@ -48,10 +48,10 @@ bool ALGItemNode::hasParent() {
 // MARK: - Description
 
 ostream& operator<<(ostream& os, const ALGItemNode* itemNode) {
-    os << "itemNode('" << itemNode->typeName << "')";
+    os << "itemNode(name: '" << itemNode->name << "', typeName: '" << itemNode->typeName << "')";
     return os;
 }
 
 string ALGItemNode::description() {
-    return "itemNode('" + typeName + "')";
+    return "itemNode(name: '" + name + "', typeName: '" + typeName + "')";
 }

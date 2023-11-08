@@ -23,6 +23,7 @@ class ALGWire;
 class ALGNode {
     
 public:
+    string name;
     string typeName;
     ALGPosition position;
     
@@ -31,10 +32,10 @@ public:
     vector<ALGWire*> inputWires;
     vector<ALGWire*> outputWires;
     
-    ALGNode(string typeName);
+    ALGNode(string name, string typeName);
     
     virtual ~ALGNode() {
-//        cout << "deinit of " << this << endl;
+        cout << "deinit of " << this << endl;
     }
     
     virtual ALGSize size(ALGLayout layout) = 0;

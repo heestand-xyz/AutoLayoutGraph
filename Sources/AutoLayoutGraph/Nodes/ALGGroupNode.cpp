@@ -13,8 +13,8 @@
 #include "../Helpers/Contains.hpp"
 #include "../Helpers/Append.hpp"
 
-ALGGroupNode::ALGGroupNode(string typeName)
-: ALGNode(typeName)
+ALGGroupNode::ALGGroupNode(string name, string typeName)
+: ALGNode(name, typeName)
 { }
 
 // MARK: - Logger
@@ -216,10 +216,10 @@ ALGNode* ALGGroupNode::asNode() {
 // MARK: - Description
 
 ostream& operator<<(ostream& os, const ALGGroupNode* groupNode) {
-    os << "groupNode('" << groupNode->typeName << "')";
+    os << "groupNode(name: '" << groupNode->name << "', typeName: '" << groupNode->typeName << "')";
     return os;
 }
 
 string ALGGroupNode::description() {
-    return "groupNode('" + typeName + "')";
+    return "groupNode(name: '" + name + "', typeName: '" + typeName + "')";
 }
