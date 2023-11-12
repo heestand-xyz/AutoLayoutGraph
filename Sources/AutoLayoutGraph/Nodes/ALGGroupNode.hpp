@@ -47,8 +47,8 @@ public:
     ALGSize groupSize(ALGLayout layout) SWIFT_RETURNS_INDEPENDENT_VALUE;
     ALGRect deepFrame(ALGNode* node, ALGLayout layout);
     
-    void updateSectionsOnDidConnect(ALGWire* wire);
-    void updateSectionsOnDidDisconnect(ALGWire* wire);
+    void updateSectionsOnConnect(ALGWire* wire);
+    void updateSectionsOnDisconnect(ALGWire* wire);
     
     ALGNodeSection* addSection();
     void removeSection(ALGNodeSection* section);

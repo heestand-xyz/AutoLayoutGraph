@@ -116,7 +116,7 @@ void AutoLayoutGraph::connectWire(ALGNode* leadingNode, ALGNode* trailingNode) {
     wire->leadingNode->outputWires.push_back(wire);
     wire->trailingNode->inputWires.push_back(wire);
     ALGGroupNode* commonParent = wire->commonParent();
-    commonParent->updateSectionsOnDidConnect(wire);
+    commonParent->updateSectionsOnConnect(wire);
     commonParent->root()->autoLayout(layout);
     os_log_info(logger, "did connect wire from leading: %{public}s to trailing: %{public}s",
                 leadingNode->description().c_str(),
@@ -147,7 +147,7 @@ void AutoLayoutGraph::disconnectWire(ALGWire* wire) {
     removeIn(wire->leadingNode->outputWires, wire);
     removeIn(wire->trailingNode->inputWires, wire);
     ALGGroupNode* commonParent = wire->commonParent();
-    commonParent->updateSectionsOnDidDisconnect(wire);
+    commonParent->updateSectionsOnDisconnect(wire);
     commonParent->root()->autoLayout(layout);
 }
 

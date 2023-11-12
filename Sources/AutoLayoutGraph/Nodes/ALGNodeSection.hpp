@@ -22,7 +22,7 @@ struct ALGNodeSection {
     vector<ALGNode*> nodes;
     
     ~ALGNodeSection() {
-        cout << "deinit of " << this << endl;
+        cout << "deinit of section " << this << endl;
     }
     
     bool contains(ALGNode* node);

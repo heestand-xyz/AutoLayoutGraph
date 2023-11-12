@@ -128,11 +128,15 @@ vector<ALGNode*> ALGGroupNode::deepNodes() {
 
 // MARK: - Update Sections
 
-void ALGGroupNode::updateSectionsOnDidConnect(ALGWire* wire) {
+void ALGGroupNode::updateSectionsOnConnect(ALGWire* wire) {
+    os_log_info(groupNodeLogger, "will update sections on connect for wire: %{public}s",
+                wire->description().c_str());
     ALGNodeSection* leadingSection = nullptr;
     ALGNodeSection* trailingSection = nullptr;
     for (ALGNodeSection* section : sections) {
         if (section->deepContains(wire->leadingNode) && section->deepContains(wire->trailingNode)) {
+            os_log_info(groupNodeLogger, "no need to update sections on connect for wire: %{public}s",
+                        wire->description().c_str());
             return;
         } else if (section->deepContains(wire->leadingNode)) {
             leadingSection = section;
@@ -146,9 +150,13 @@ void ALGGroupNode::updateSectionsOnDidConnect(ALGWire* wire) {
     }
     leadingSection->nodes += trailingSection->nodes;
     removeSection(trailingSection);
+    os_log_info(groupNodeLogger, "did update sections on connect for wire: %{public}s",
+                wire->description().c_str());
 }
 
-void ALGGroupNode::updateSectionsOnDidDisconnect(ALGWire* wire) {
+void ALGGroupNode::updateSectionsOnDisconnect(ALGWire* wire) {
+    os_log_info(groupNodeLogger, "will update sections on disconnect for wire: %{public}s",
+                wire->description().c_str());
     ALGNodeSection* section = firstWhere(sections, [wire](ALGNodeSection* section) {
         return section->deepContains(wire->leadingNode);
     });
@@ -165,17 +173,18 @@ void ALGGroupNode::updateSectionsOnDidDisconnect(ALGWire* wire) {
         os_log_fault(groupNodeLogger, "update sections on did disconnect failed, section not found");
         throw ALGGroupNodeException("update sections on did disconnect failed, section not found");
     }
+    os_log_info(groupNodeLogger, "did update sections on disconnect for wire: %{public}s",
+                wire->description().c_str());
 }
 
 // MARK: - Section
 
 ALGNodeSection* ALGGroupNode::addSection() {
-    os_log_info(groupNodeLogger, "will add section to: %{public}s",
-                description().c_str());
     ALGNodeSection* section = new ALGNodeSection();
     section->group = this;
     sections.push_back(section);
-    os_log_info(groupNodeLogger, "did add section to: %{public}s",
+    os_log_info(groupNodeLogger, "add section: %{public}s to group: %{public}s",
+                section->description().c_str(),
                 description().c_str());
     return section;
 }
@@ -201,6 +210,7 @@ void ALGGroupNode::autoLayout(ALGLayout layout) {
     os_log_info(groupNodeLogger, "will auto layout: %{public}s",
                 description().c_str());
     for (ALGNodeSection* section : sections) {
+        cout << "-------->>> " << section << endl;
         section->autoLayout(layout);
     }
     os_log_info(groupNodeLogger, "did auto layout: %{public}s",

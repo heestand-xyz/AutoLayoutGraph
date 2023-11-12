@@ -170,7 +170,11 @@ void ALGNodeSection::autoLayout(ALGLayout layout) {
 // MARK: - Index
 
 int ALGNodeSection::index() const {
+    os_log_info(nodeSectionLogger, "-----> size: %{public}s",
+                to_string(group->sections.size()).c_str());
     for (int i = 0; i < group->sections.size(); i++) {
+        os_log_info(nodeSectionLogger, "-----> index: %{public}s", 
+                    to_string(i).c_str());
         ALGNodeSection* section = group->sections[i];
         if (section == this) {
             return i;
